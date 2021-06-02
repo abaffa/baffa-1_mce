@@ -5,10 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("sol1-simu")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SOL-1 SIMU")]
+[assembly: AssemblyDescription("Microcode Editor for SOL-1 Homebrew Computer")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Augusto Baffa")]
 [assembly: AssemblyProduct("sol1-simu")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
