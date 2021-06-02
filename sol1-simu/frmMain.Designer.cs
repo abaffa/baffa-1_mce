@@ -1,6 +1,6 @@
 ﻿namespace sol1_simu
 {
-    partial class Form1
+    partial class FrmMain
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.microcodeFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnu_new = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,49 +71,53 @@
             this.lstInstructions = new System.Windows.Forms.ListBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.list_names = new System.Windows.Forms.ListBox();
-            this.list_cycle = new System.Windows.Forms.ListBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.memo_info = new System.Windows.Forms.TextBox();
-            this.control_list = new System.Windows.Forms.CheckedListBox();
-            this.memo_name = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cmb_next_inst = new System.Windows.Forms.ComboBox();
-            this.cmb_cond_sel = new System.Windows.Forms.ComboBox();
-            this.cmb_flags_src = new System.Windows.Forms.ComboBox();
-            this.txtInteger = new System.Windows.Forms.TextBox();
-            this.btn_offset = new System.Windows.Forms.Button();
-            this.btn_imm = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cmb_mar_in_src = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.cmb_mdr_in_src = new System.Windows.Forms.ComboBox();
-            this.cmb_mdr_out_src = new System.Windows.Forms.ComboBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.cmb_alu_a_mux = new System.Windows.Forms.ComboBox();
-            this.cmb_alu_b_mux = new System.Windows.Forms.ComboBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.cmbAluOp = new System.Windows.Forms.ComboBox();
-            this.cmb_alu_cf_in = new System.Windows.Forms.ComboBox();
-            this.cmb_alu_cf_out_inv = new System.Windows.Forms.ComboBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.cmb_zbus = new System.Windows.Forms.ComboBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.cmb_of_in = new System.Windows.Forms.ComboBox();
+            this.cmb_sf_in = new System.Windows.Forms.ComboBox();
+            this.cmb_cf_in = new System.Windows.Forms.ComboBox();
+            this.cmb_zf_in = new System.Windows.Forms.ComboBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.cmb_uof = new System.Windows.Forms.ComboBox();
+            this.cmb_usf = new System.Windows.Forms.ComboBox();
+            this.cmb_ucf = new System.Windows.Forms.ComboBox();
+            this.cmb_uzf = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.cmb_shift_src = new System.Windows.Forms.ComboBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.cmb_uzf = new System.Windows.Forms.ComboBox();
-            this.cmb_ucf = new System.Windows.Forms.ComboBox();
-            this.cmb_usf = new System.Windows.Forms.ComboBox();
-            this.cmb_uof = new System.Windows.Forms.ComboBox();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.cmb_zf_in = new System.Windows.Forms.ComboBox();
-            this.cmb_cf_in = new System.Windows.Forms.ComboBox();
-            this.cmb_sf_in = new System.Windows.Forms.ComboBox();
-            this.cmb_of_in = new System.Windows.Forms.ComboBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.cmb_zbus = new System.Windows.Forms.ComboBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cmb_alu_cf_out_inv = new System.Windows.Forms.ComboBox();
+            this.cmb_alu_cf_in = new System.Windows.Forms.ComboBox();
+            this.cmbAluOp = new System.Windows.Forms.ComboBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.cmb_alu_b_mux = new System.Windows.Forms.ComboBox();
+            this.cmb_alu_a_mux = new System.Windows.Forms.ComboBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cmb_mdr_out_src = new System.Windows.Forms.ComboBox();
+            this.cmb_mdr_in_src = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cmb_mar_in_src = new System.Windows.Forms.ComboBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_imm = new System.Windows.Forms.Button();
+            this.btn_offset = new System.Windows.Forms.Button();
+            this.txtInteger = new System.Windows.Forms.TextBox();
+            this.cmb_flags_src = new System.Windows.Forms.ComboBox();
+            this.cmb_cond_sel = new System.Windows.Forms.ComboBox();
+            this.cmb_next_inst = new System.Windows.Forms.ComboBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.memo_name = new System.Windows.Forms.TextBox();
+            this.control_list = new System.Windows.Forms.CheckedListBox();
+            this.memo_info = new System.Windows.Forms.TextBox();
+            this.list_cycle = new System.Windows.Forms.ListBox();
+            this.list_names = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.onlineInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -121,17 +126,17 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -142,7 +147,8 @@
             this.microcodeFileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.settingsToolStripMenuItem,
-            this.toolsToolStripMenuItem});
+            this.toolsToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1299, 24);
@@ -162,57 +168,57 @@
             this.quitToolStripMenuItem});
             this.microcodeFileToolStripMenuItem.Name = "microcodeFileToolStripMenuItem";
             this.microcodeFileToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
-            this.microcodeFileToolStripMenuItem.Text = "Microcode File";
+            this.microcodeFileToolStripMenuItem.Text = "Microcode &File";
             // 
             // mnu_new
             // 
             this.mnu_new.Name = "mnu_new";
-            this.mnu_new.Size = new System.Drawing.Size(142, 22);
+            this.mnu_new.Size = new System.Drawing.Size(180, 22);
             this.mnu_new.Text = "New";
             this.mnu_new.Click += new System.EventHandler(this.mnu_new_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(139, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
             // 
             // openRecentToolStripMenuItem
             // 
             this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openRecentToolStripMenuItem.Text = "Open Recent";
             this.openRecentToolStripMenuItem.Click += new System.EventHandler(this.openRecentToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(139, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(177, 6);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -223,7 +229,7 @@
             this.pasteInstructionToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
+            this.editToolStripMenuItem.Text = "&Edit";
             // 
             // copyInstructionToolStripMenuItem
             // 
@@ -249,14 +255,14 @@
             this.microcodeEditorToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Text = "&Settings";
             // 
             // microcodeEditorToolStripMenuItem
             // 
             this.microcodeEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnu_readonly});
             this.microcodeEditorToolStripMenuItem.Name = "microcodeEditorToolStripMenuItem";
-            this.microcodeEditorToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.microcodeEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.microcodeEditorToolStripMenuItem.Text = "Microcode Editor";
             // 
             // mnu_readonly
@@ -273,13 +279,14 @@
             this.generateTASMTableToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
-            this.toolsToolStripMenuItem.Text = "Tools";
+            this.toolsToolStripMenuItem.Text = "&Tools";
             // 
             // calculateAvgCyclesPerInstructionToolStripMenuItem
             // 
             this.calculateAvgCyclesPerInstructionToolStripMenuItem.Name = "calculateAvgCyclesPerInstructionToolStripMenuItem";
             this.calculateAvgCyclesPerInstructionToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
             this.calculateAvgCyclesPerInstructionToolStripMenuItem.Text = "Calculate Avg. Cycles per Instruction";
+            this.calculateAvgCyclesPerInstructionToolStripMenuItem.Visible = false;
             this.calculateAvgCyclesPerInstructionToolStripMenuItem.Click += new System.EventHandler(this.calculateAvgCyclesPerInstructionToolStripMenuItem_Click);
             // 
             // generateTASMTableToolStripMenuItem
@@ -471,7 +478,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1291, 776);
+            this.tabPage3.Size = new System.Drawing.Size(1291, 754);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Web / COM";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -482,7 +489,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1291, 776);
+            this.tabPage2.Size = new System.Drawing.Size(1291, 754);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Instruction List";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -493,7 +500,7 @@
             this.lstInstructions.FormattingEnabled = true;
             this.lstInstructions.Location = new System.Drawing.Point(3, 3);
             this.lstInstructions.Name = "lstInstructions";
-            this.lstInstructions.Size = new System.Drawing.Size(1285, 770);
+            this.lstInstructions.Size = new System.Drawing.Size(1285, 748);
             this.lstInstructions.Sorted = true;
             this.lstInstructions.TabIndex = 1;
             this.lstInstructions.SelectedIndexChanged += new System.EventHandler(this.lstInstructions_SelectedIndexChanged);
@@ -528,75 +535,6 @@
             this.splitContainer1.SplitterDistance = 688;
             this.splitContainer1.TabIndex = 0;
             // 
-            // list_names
-            // 
-            this.list_names.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.list_names.FormattingEnabled = true;
-            this.list_names.Location = new System.Drawing.Point(0, 0);
-            this.list_names.Name = "list_names";
-            this.list_names.Size = new System.Drawing.Size(593, 748);
-            this.list_names.TabIndex = 0;
-            this.list_names.SelectedIndexChanged += new System.EventHandler(this.list_names_SelectedIndexChanged);
-            // 
-            // list_cycle
-            // 
-            this.list_cycle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.list_cycle.Dock = System.Windows.Forms.DockStyle.Right;
-            this.list_cycle.FormattingEnabled = true;
-            this.list_cycle.Location = new System.Drawing.Point(644, 0);
-            this.list_cycle.Name = "list_cycle";
-            this.list_cycle.Size = new System.Drawing.Size(44, 748);
-            this.list_cycle.TabIndex = 3;
-            this.list_cycle.SelectedIndexChanged += new System.EventHandler(this.lstCycles_SelectedIndexChanged);
-            this.list_cycle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.list_cycle_KeyPress);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.memo_name);
-            this.panel1.Controls.Add(this.control_list);
-            this.panel1.Controls.Add(this.memo_info);
-            this.panel1.Location = new System.Drawing.Point(200, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(438, 767);
-            this.panel1.TabIndex = 4;
-            // 
-            // memo_info
-            // 
-            this.memo_info.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.memo_info.Location = new System.Drawing.Point(0, 600);
-            this.memo_info.Multiline = true;
-            this.memo_info.Name = "memo_info";
-            this.memo_info.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.memo_info.Size = new System.Drawing.Size(438, 167);
-            this.memo_info.TabIndex = 4;
-            this.memo_info.KeyDown += new System.Windows.Forms.KeyEventHandler(this.memo_info_KeyDown);
-            this.memo_info.KeyUp += new System.Windows.Forms.KeyEventHandler(this.memo_info_KeyUp);
-            // 
-            // control_list
-            // 
-            this.control_list.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.control_list.FormattingEnabled = true;
-            this.control_list.Location = new System.Drawing.Point(0, 0);
-            this.control_list.Name = "control_list";
-            this.control_list.Size = new System.Drawing.Size(438, 544);
-            this.control_list.TabIndex = 8;
-            this.control_list.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.control_list_ItemCheck);
-            this.control_list.SelectedIndexChanged += new System.EventHandler(this.control_list_SelectedIndexChanged);
-            // 
-            // memo_name
-            // 
-            this.memo_name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.memo_name.Location = new System.Drawing.Point(0, 552);
-            this.memo_name.Name = "memo_name";
-            this.memo_name.Size = new System.Drawing.Size(438, 20);
-            this.memo_name.TabIndex = 9;
-            this.memo_name.TextChanged += new System.EventHandler(this.memo_name_TextChanged);
-            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -616,179 +554,268 @@
             this.panel2.Size = new System.Drawing.Size(194, 745);
             this.panel2.TabIndex = 1;
             // 
-            // groupBox1
+            // groupBox9
             // 
-            this.groupBox1.Controls.Add(this.btn_imm);
-            this.groupBox1.Controls.Add(this.btn_offset);
-            this.groupBox1.Controls.Add(this.txtInteger);
-            this.groupBox1.Controls.Add(this.cmb_flags_src);
-            this.groupBox1.Controls.Add(this.cmb_cond_sel);
-            this.groupBox1.Controls.Add(this.cmb_next_inst);
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(171, 129);
-            this.groupBox1.TabIndex = 11;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Next Micro-Instruction";
+            this.groupBox9.Controls.Add(this.cmb_of_in);
+            this.groupBox9.Controls.Add(this.cmb_sf_in);
+            this.groupBox9.Controls.Add(this.cmb_cf_in);
+            this.groupBox9.Controls.Add(this.cmb_zf_in);
+            this.groupBox9.Location = new System.Drawing.Point(3, 707);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(173, 130);
+            this.groupBox9.TabIndex = 19;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Arithmetic Flags In";
             // 
-            // cmb_next_inst
+            // cmb_of_in
             // 
-            this.cmb_next_inst.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_next_inst.FormattingEnabled = true;
-            this.cmb_next_inst.Items.AddRange(new object[] {
-            "Next by Offset",
-            "Branch",
-            "Next is Fetch",
-            "Next by IR"});
-            this.cmb_next_inst.Location = new System.Drawing.Point(6, 19);
-            this.cmb_next_inst.Name = "cmb_next_inst";
-            this.cmb_next_inst.Size = new System.Drawing.Size(159, 21);
-            this.cmb_next_inst.TabIndex = 4;
-            this.cmb_next_inst.SelectedIndexChanged += new System.EventHandler(this.cmb_next_inst_SelectedIndexChanged);
+            this.cmb_of_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_of_in.FormattingEnabled = true;
+            this.cmb_of_in.Items.AddRange(new object[] {
+            "unchanged",
+            "ALU_OF",
+            "ZBUS_7",
+            "ZBUS_3",
+            "(U_SF) XOR (ZBUS_7)"});
+            this.cmb_of_in.Location = new System.Drawing.Point(6, 100);
+            this.cmb_of_in.Name = "cmb_of_in";
+            this.cmb_of_in.Size = new System.Drawing.Size(161, 21);
+            this.cmb_of_in.TabIndex = 3;
+            this.cmb_of_in.SelectedIndexChanged += new System.EventHandler(this.cmb_of_in_SelectedIndexChanged);
             // 
-            // cmb_cond_sel
+            // cmb_sf_in
             // 
-            this.cmb_cond_sel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_cond_sel.FormattingEnabled = true;
-            this.cmb_cond_sel.Items.AddRange(new object[] {
-            "zf",
-            "cf / LU",
-            "sf",
-            "of",
-            "L",
-            "LE",
-            "LEU",
-            "DMA_REQ",
-            "STATUS_MODE",
-            "WAIT",
-            "INT_PENDING",
-            "EXT_INPUT",
-            "STATUS_DIR",
-            "DISPLAY_LOAD",
-            "unused",
-            "unused",
-            "~zf",
-            "~cf / GEU",
-            "~sf",
-            "~of",
-            "GE",
-            "G",
-            "GU",
-            "~DMA_REQ",
-            "~STATUS_MODE",
-            "~WAIT",
-            "~INT_PENDING",
-            "~EXT_PENDING",
-            "~STATUS_DIR",
-            "~DISPLAY_R_LOAD",
-            "unused",
-            "unused"});
-            this.cmb_cond_sel.Location = new System.Drawing.Point(6, 46);
-            this.cmb_cond_sel.Name = "cmb_cond_sel";
-            this.cmb_cond_sel.Size = new System.Drawing.Size(159, 21);
-            this.cmb_cond_sel.TabIndex = 5;
-            this.cmb_cond_sel.SelectedIndexChanged += new System.EventHandler(this.cmb_cond_sel_SelectedIndexChanged);
+            this.cmb_sf_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_sf_in.FormattingEnabled = true;
+            this.cmb_sf_in.Items.AddRange(new object[] {
+            "unchanged",
+            "ZBUS_7",
+            "GND",
+            "ZBUS_2"});
+            this.cmb_sf_in.Location = new System.Drawing.Point(6, 73);
+            this.cmb_sf_in.Name = "cmb_sf_in";
+            this.cmb_sf_in.Size = new System.Drawing.Size(161, 21);
+            this.cmb_sf_in.TabIndex = 2;
+            this.cmb_sf_in.SelectedIndexChanged += new System.EventHandler(this.cmb_sf_in_SelectedIndexChanged);
             // 
-            // cmb_flags_src
+            // cmb_cf_in
             // 
-            this.cmb_flags_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_flags_src.FormattingEnabled = true;
-            this.cmb_flags_src.Items.AddRange(new object[] {
-            "CPU Flags",
-            "Microcode Flags"});
-            this.cmb_flags_src.Location = new System.Drawing.Point(6, 73);
-            this.cmb_flags_src.Name = "cmb_flags_src";
-            this.cmb_flags_src.Size = new System.Drawing.Size(159, 21);
-            this.cmb_flags_src.TabIndex = 6;
-            this.cmb_flags_src.SelectedIndexChanged += new System.EventHandler(this.cmb_flags_src_SelectedIndexChanged);
+            this.cmb_cf_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_cf_in.FormattingEnabled = true;
+            this.cmb_cf_in.Items.AddRange(new object[] {
+            "unchanged",
+            "ALU Final CF",
+            "ALU_OUTPUT_0",
+            "ZBUS_1",
+            "ALU_OUTPUT_7"});
+            this.cmb_cf_in.Location = new System.Drawing.Point(6, 46);
+            this.cmb_cf_in.Name = "cmb_cf_in";
+            this.cmb_cf_in.Size = new System.Drawing.Size(161, 21);
+            this.cmb_cf_in.TabIndex = 1;
+            this.cmb_cf_in.SelectedIndexChanged += new System.EventHandler(this.cmb_cf_in_SelectedIndexChanged);
             // 
-            // txtInteger
+            // cmb_zf_in
             // 
-            this.txtInteger.Location = new System.Drawing.Point(6, 100);
-            this.txtInteger.Name = "txtInteger";
-            this.txtInteger.Size = new System.Drawing.Size(47, 20);
-            this.txtInteger.TabIndex = 7;
-            this.txtInteger.Text = "0";
+            this.cmb_zf_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_zf_in.FormattingEnabled = true;
+            this.cmb_zf_in.Items.AddRange(new object[] {
+            "unchanged",
+            "ALU_ZF",
+            "ALU_ZF && ZF",
+            "ZBUS_0"});
+            this.cmb_zf_in.Location = new System.Drawing.Point(6, 19);
+            this.cmb_zf_in.Name = "cmb_zf_in";
+            this.cmb_zf_in.Size = new System.Drawing.Size(161, 21);
+            this.cmb_zf_in.TabIndex = 0;
+            this.cmb_zf_in.SelectedIndexChanged += new System.EventHandler(this.cmb_zf_in_SelectedIndexChanged);
             // 
-            // btn_offset
+            // groupBox8
             // 
-            this.btn_offset.Location = new System.Drawing.Point(59, 100);
-            this.btn_offset.Name = "btn_offset";
-            this.btn_offset.Size = new System.Drawing.Size(50, 20);
-            this.btn_offset.TabIndex = 8;
-            this.btn_offset.Text = "Offset";
-            this.btn_offset.UseVisualStyleBackColor = true;
-            this.btn_offset.Click += new System.EventHandler(this.btn_offset_Click);
+            this.groupBox8.Controls.Add(this.cmb_uof);
+            this.groupBox8.Controls.Add(this.cmb_usf);
+            this.groupBox8.Controls.Add(this.cmb_ucf);
+            this.groupBox8.Controls.Add(this.cmb_uzf);
+            this.groupBox8.Location = new System.Drawing.Point(3, 571);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(173, 130);
+            this.groupBox8.TabIndex = 18;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Micro Flags In";
             // 
-            // btn_imm
+            // cmb_uof
             // 
-            this.btn_imm.Location = new System.Drawing.Point(115, 100);
-            this.btn_imm.Name = "btn_imm";
-            this.btn_imm.Size = new System.Drawing.Size(50, 20);
-            this.btn_imm.TabIndex = 9;
-            this.btn_imm.Text = "Imm";
-            this.btn_imm.UseVisualStyleBackColor = true;
-            this.btn_imm.Click += new System.EventHandler(this.btn_imm_Click);
+            this.cmb_uof.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_uof.FormattingEnabled = true;
+            this.cmb_uof.Items.AddRange(new object[] {
+            "unchanged",
+            "ALU_OF"});
+            this.cmb_uof.Location = new System.Drawing.Point(6, 100);
+            this.cmb_uof.Name = "cmb_uof";
+            this.cmb_uof.Size = new System.Drawing.Size(161, 21);
+            this.cmb_uof.TabIndex = 3;
+            this.cmb_uof.SelectedIndexChanged += new System.EventHandler(this.cmb_uof_SelectedIndexChanged);
             // 
-            // groupBox2
+            // cmb_usf
             // 
-            this.groupBox2.Controls.Add(this.cmb_mar_in_src);
-            this.groupBox2.Location = new System.Drawing.Point(3, 138);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(173, 47);
-            this.groupBox2.TabIndex = 12;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "MAR In Src";
+            this.cmb_usf.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_usf.FormattingEnabled = true;
+            this.cmb_usf.Items.AddRange(new object[] {
+            "unchanged",
+            "Z_BUS_7"});
+            this.cmb_usf.Location = new System.Drawing.Point(6, 73);
+            this.cmb_usf.Name = "cmb_usf";
+            this.cmb_usf.Size = new System.Drawing.Size(161, 21);
+            this.cmb_usf.TabIndex = 2;
+            this.cmb_usf.SelectedIndexChanged += new System.EventHandler(this.cmb_usf_SelectedIndexChanged);
             // 
-            // cmb_mar_in_src
+            // cmb_ucf
             // 
-            this.cmb_mar_in_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_mar_in_src.FormattingEnabled = true;
-            this.cmb_mar_in_src.Items.AddRange(new object[] {
-            "MAR IN : ZBus",
-            "MAR IN : PC"});
-            this.cmb_mar_in_src.Location = new System.Drawing.Point(6, 19);
-            this.cmb_mar_in_src.Name = "cmb_mar_in_src";
-            this.cmb_mar_in_src.Size = new System.Drawing.Size(161, 21);
-            this.cmb_mar_in_src.TabIndex = 0;
-            this.cmb_mar_in_src.SelectedIndexChanged += new System.EventHandler(this.cmb_mar_in_src_SelectedIndexChanged);
+            this.cmb_ucf.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_ucf.FormattingEnabled = true;
+            this.cmb_ucf.Items.AddRange(new object[] {
+            "unchanged",
+            "ALU Final CF",
+            "ALU_OUTPUT_0",
+            "ALU_OUTPUT_7"});
+            this.cmb_ucf.Location = new System.Drawing.Point(6, 46);
+            this.cmb_ucf.Name = "cmb_ucf";
+            this.cmb_ucf.Size = new System.Drawing.Size(161, 21);
+            this.cmb_ucf.TabIndex = 1;
+            this.cmb_ucf.SelectedIndexChanged += new System.EventHandler(this.cmb_ucf_SelectedIndexChanged);
             // 
-            // groupBox3
+            // cmb_uzf
             // 
-            this.groupBox3.Controls.Add(this.cmb_mdr_out_src);
-            this.groupBox3.Controls.Add(this.cmb_mdr_in_src);
-            this.groupBox3.Location = new System.Drawing.Point(3, 191);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(173, 77);
-            this.groupBox3.TabIndex = 14;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "MDR In/Out Src";
+            this.cmb_uzf.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_uzf.FormattingEnabled = true;
+            this.cmb_uzf.Items.AddRange(new object[] {
+            "unchanged",
+            "ALU_ZF",
+            "ALU_ZF && uZF",
+            "gnd"});
+            this.cmb_uzf.Location = new System.Drawing.Point(6, 19);
+            this.cmb_uzf.Name = "cmb_uzf";
+            this.cmb_uzf.Size = new System.Drawing.Size(161, 21);
+            this.cmb_uzf.TabIndex = 0;
+            this.cmb_uzf.SelectedIndexChanged += new System.EventHandler(this.cmb_uzf_SelectedIndexChanged);
             // 
-            // cmb_mdr_in_src
+            // groupBox7
             // 
-            this.cmb_mdr_in_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_mdr_in_src.FormattingEnabled = true;
-            this.cmb_mdr_in_src.Items.AddRange(new object[] {
-            "ZBus",
-            "DataBus"});
-            this.cmb_mdr_in_src.Location = new System.Drawing.Point(6, 19);
-            this.cmb_mdr_in_src.Name = "cmb_mdr_in_src";
-            this.cmb_mdr_in_src.Size = new System.Drawing.Size(161, 21);
-            this.cmb_mdr_in_src.TabIndex = 0;
-            this.cmb_mdr_in_src.SelectedIndexChanged += new System.EventHandler(this.cmb_mdr_in_src_SelectedIndexChanged);
+            this.groupBox7.Controls.Add(this.cmb_shift_src);
+            this.groupBox7.Location = new System.Drawing.Point(3, 518);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(173, 47);
+            this.groupBox7.TabIndex = 17;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Shift Src";
             // 
-            // cmb_mdr_out_src
+            // cmb_shift_src
             // 
-            this.cmb_mdr_out_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_mdr_out_src.FormattingEnabled = true;
-            this.cmb_mdr_out_src.Items.AddRange(new object[] {
-            "MDR Low",
-            "MDR High"});
-            this.cmb_mdr_out_src.Location = new System.Drawing.Point(6, 46);
-            this.cmb_mdr_out_src.Name = "cmb_mdr_out_src";
-            this.cmb_mdr_out_src.Size = new System.Drawing.Size(161, 21);
-            this.cmb_mdr_out_src.TabIndex = 1;
-            this.cmb_mdr_out_src.SelectedIndexChanged += new System.EventHandler(this.cmb_mdr_out_src_SelectedIndexChanged);
+            this.cmb_shift_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_shift_src.FormattingEnabled = true;
+            this.cmb_shift_src.Items.AddRange(new object[] {
+            "gnd",
+            "uCF",
+            "CF",
+            "ALU Result [0]",
+            "ALU Result [7]"});
+            this.cmb_shift_src.Location = new System.Drawing.Point(6, 19);
+            this.cmb_shift_src.Name = "cmb_shift_src";
+            this.cmb_shift_src.Size = new System.Drawing.Size(161, 21);
+            this.cmb_shift_src.TabIndex = 0;
+            this.cmb_shift_src.SelectedIndexChanged += new System.EventHandler(this.cmb_shift_src_SelectedIndexChanged);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.cmb_zbus);
+            this.groupBox6.Location = new System.Drawing.Point(3, 465);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(173, 47);
+            this.groupBox6.TabIndex = 13;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "ALU to ZBUS";
+            // 
+            // cmb_zbus
+            // 
+            this.cmb_zbus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_zbus.FormattingEnabled = true;
+            this.cmb_zbus.Items.AddRange(new object[] {
+            "Normal ALU Result",
+            "Shifted Right",
+            "Shifted Left",
+            "Sign Extend"});
+            this.cmb_zbus.Location = new System.Drawing.Point(6, 19);
+            this.cmb_zbus.Name = "cmb_zbus";
+            this.cmb_zbus.Size = new System.Drawing.Size(161, 21);
+            this.cmb_zbus.TabIndex = 0;
+            this.cmb_zbus.SelectedIndexChanged += new System.EventHandler(this.cmb_zbus_SelectedIndexChanged);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.cmb_alu_cf_out_inv);
+            this.groupBox5.Controls.Add(this.cmb_alu_cf_in);
+            this.groupBox5.Controls.Add(this.cmbAluOp);
+            this.groupBox5.Location = new System.Drawing.Point(3, 357);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(173, 102);
+            this.groupBox5.TabIndex = 16;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "ALU Operation / Carry In";
+            // 
+            // cmb_alu_cf_out_inv
+            // 
+            this.cmb_alu_cf_out_inv.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_alu_cf_out_inv.FormattingEnabled = true;
+            this.cmb_alu_cf_out_inv.Items.AddRange(new object[] {
+            "Carry-out not inverted",
+            "Carry-out inverted"});
+            this.cmb_alu_cf_out_inv.Location = new System.Drawing.Point(6, 73);
+            this.cmb_alu_cf_out_inv.Name = "cmb_alu_cf_out_inv";
+            this.cmb_alu_cf_out_inv.Size = new System.Drawing.Size(161, 21);
+            this.cmb_alu_cf_out_inv.TabIndex = 2;
+            this.cmb_alu_cf_out_inv.SelectedIndexChanged += new System.EventHandler(this.cmb_alu_cf_out_inv_SelectedIndexChanged);
+            // 
+            // cmb_alu_cf_in
+            // 
+            this.cmb_alu_cf_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_alu_cf_in.FormattingEnabled = true;
+            this.cmb_alu_cf_in.Items.AddRange(new object[] {
+            "vcc",
+            "cf",
+            "u_cf",
+            "",
+            "gnd",
+            "~cf",
+            "~u_cf"});
+            this.cmb_alu_cf_in.Location = new System.Drawing.Point(6, 46);
+            this.cmb_alu_cf_in.Name = "cmb_alu_cf_in";
+            this.cmb_alu_cf_in.Size = new System.Drawing.Size(161, 21);
+            this.cmb_alu_cf_in.TabIndex = 1;
+            this.cmb_alu_cf_in.SelectedIndexChanged += new System.EventHandler(this.cmb_alu_cf_in_SelectedIndexChanged);
+            // 
+            // cmbAluOp
+            // 
+            this.cmbAluOp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAluOp.FormattingEnabled = true;
+            this.cmbAluOp.Items.AddRange(new object[] {
+            "ALU Operation",
+            "",
+            "plus",
+            "minus",
+            "and",
+            "or",
+            "xor",
+            "A",
+            "B",
+            "not A",
+            "not B",
+            "nand",
+            "nor",
+            "nxor"});
+            this.cmbAluOp.Location = new System.Drawing.Point(6, 19);
+            this.cmbAluOp.Name = "cmbAluOp";
+            this.cmbAluOp.Size = new System.Drawing.Size(161, 21);
+            this.cmbAluOp.TabIndex = 0;
+            this.cmbAluOp.SelectedIndexChanged += new System.EventHandler(this.cmbAluOp_SelectedIndexChanged);
             // 
             // groupBox4
             // 
@@ -800,6 +827,25 @@
             this.groupBox4.TabIndex = 15;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "ALU Inputs A/B";
+            // 
+            // cmb_alu_b_mux
+            // 
+            this.cmb_alu_b_mux.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_alu_b_mux.FormattingEnabled = true;
+            this.cmb_alu_b_mux.Items.AddRange(new object[] {
+            "immediate",
+            "",
+            "",
+            "",
+            "mdr_l",
+            "mdr_h",
+            "tdr_l",
+            "tdr_h"});
+            this.cmb_alu_b_mux.Location = new System.Drawing.Point(6, 46);
+            this.cmb_alu_b_mux.Name = "cmb_alu_b_mux";
+            this.cmb_alu_b_mux.Size = new System.Drawing.Size(161, 21);
+            this.cmb_alu_b_mux.TabIndex = 1;
+            this.cmb_alu_b_mux.SelectedIndexChanged += new System.EventHandler(this.cmb_alu_b_mux_SelectedIndexChanged);
             // 
             // cmb_alu_a_mux
             // 
@@ -848,287 +894,248 @@
             this.cmb_alu_a_mux.TabIndex = 0;
             this.cmb_alu_a_mux.SelectedIndexChanged += new System.EventHandler(this.cmb_alu_a_mux_SelectedIndexChanged);
             // 
-            // cmb_alu_b_mux
+            // groupBox3
             // 
-            this.cmb_alu_b_mux.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_alu_b_mux.FormattingEnabled = true;
-            this.cmb_alu_b_mux.Items.AddRange(new object[] {
-            "immediate",
-            "",
-            "",
-            "",
-            "mdr_l",
-            "mdr_h",
-            "tdr_l",
-            "tdr_h"});
-            this.cmb_alu_b_mux.Location = new System.Drawing.Point(6, 46);
-            this.cmb_alu_b_mux.Name = "cmb_alu_b_mux";
-            this.cmb_alu_b_mux.Size = new System.Drawing.Size(161, 21);
-            this.cmb_alu_b_mux.TabIndex = 1;
-            this.cmb_alu_b_mux.SelectedIndexChanged += new System.EventHandler(this.cmb_alu_b_mux_SelectedIndexChanged);
+            this.groupBox3.Controls.Add(this.cmb_mdr_out_src);
+            this.groupBox3.Controls.Add(this.cmb_mdr_in_src);
+            this.groupBox3.Location = new System.Drawing.Point(3, 191);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(173, 77);
+            this.groupBox3.TabIndex = 14;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "MDR In/Out Src";
             // 
-            // groupBox5
+            // cmb_mdr_out_src
             // 
-            this.groupBox5.Controls.Add(this.cmb_alu_cf_out_inv);
-            this.groupBox5.Controls.Add(this.cmb_alu_cf_in);
-            this.groupBox5.Controls.Add(this.cmbAluOp);
-            this.groupBox5.Location = new System.Drawing.Point(3, 357);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(173, 102);
-            this.groupBox5.TabIndex = 16;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "ALU Operation / Carry In";
+            this.cmb_mdr_out_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_mdr_out_src.FormattingEnabled = true;
+            this.cmb_mdr_out_src.Items.AddRange(new object[] {
+            "MDR Low",
+            "MDR High"});
+            this.cmb_mdr_out_src.Location = new System.Drawing.Point(6, 46);
+            this.cmb_mdr_out_src.Name = "cmb_mdr_out_src";
+            this.cmb_mdr_out_src.Size = new System.Drawing.Size(161, 21);
+            this.cmb_mdr_out_src.TabIndex = 1;
+            this.cmb_mdr_out_src.SelectedIndexChanged += new System.EventHandler(this.cmb_mdr_out_src_SelectedIndexChanged);
             // 
-            // cmbAluOp
+            // cmb_mdr_in_src
             // 
-            this.cmbAluOp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAluOp.FormattingEnabled = true;
-            this.cmbAluOp.Items.AddRange(new object[] {
-            "ALU Operation",
-            "",
-            "plus",
-            "minus",
-            "and",
-            "or",
-            "xor",
-            "A",
-            "B",
-            "not A",
-            "not B",
-            "nand",
-            "nor",
-            "nxor"});
-            this.cmbAluOp.Location = new System.Drawing.Point(6, 19);
-            this.cmbAluOp.Name = "cmbAluOp";
-            this.cmbAluOp.Size = new System.Drawing.Size(161, 21);
-            this.cmbAluOp.TabIndex = 0;
-            this.cmbAluOp.SelectedIndexChanged += new System.EventHandler(this.cmbAluOp_SelectedIndexChanged);
+            this.cmb_mdr_in_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_mdr_in_src.FormattingEnabled = true;
+            this.cmb_mdr_in_src.Items.AddRange(new object[] {
+            "ZBus",
+            "DataBus"});
+            this.cmb_mdr_in_src.Location = new System.Drawing.Point(6, 19);
+            this.cmb_mdr_in_src.Name = "cmb_mdr_in_src";
+            this.cmb_mdr_in_src.Size = new System.Drawing.Size(161, 21);
+            this.cmb_mdr_in_src.TabIndex = 0;
+            this.cmb_mdr_in_src.SelectedIndexChanged += new System.EventHandler(this.cmb_mdr_in_src_SelectedIndexChanged);
             // 
-            // cmb_alu_cf_in
+            // groupBox2
             // 
-            this.cmb_alu_cf_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_alu_cf_in.FormattingEnabled = true;
-            this.cmb_alu_cf_in.Items.AddRange(new object[] {
-            "vcc",
-            "cf",
-            "u_cf",
-            "",
-            "gnd",
-            "~cf",
-            "~u_cf"});
-            this.cmb_alu_cf_in.Location = new System.Drawing.Point(6, 46);
-            this.cmb_alu_cf_in.Name = "cmb_alu_cf_in";
-            this.cmb_alu_cf_in.Size = new System.Drawing.Size(161, 21);
-            this.cmb_alu_cf_in.TabIndex = 1;
-            this.cmb_alu_cf_in.SelectedIndexChanged += new System.EventHandler(this.cmb_alu_cf_in_SelectedIndexChanged);
+            this.groupBox2.Controls.Add(this.cmb_mar_in_src);
+            this.groupBox2.Location = new System.Drawing.Point(3, 138);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(173, 47);
+            this.groupBox2.TabIndex = 12;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "MAR In Src";
             // 
-            // cmb_alu_cf_out_inv
+            // cmb_mar_in_src
             // 
-            this.cmb_alu_cf_out_inv.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_alu_cf_out_inv.FormattingEnabled = true;
-            this.cmb_alu_cf_out_inv.Items.AddRange(new object[] {
-            "Carry-out not inverted",
-            "Carry-out inverted"});
-            this.cmb_alu_cf_out_inv.Location = new System.Drawing.Point(6, 73);
-            this.cmb_alu_cf_out_inv.Name = "cmb_alu_cf_out_inv";
-            this.cmb_alu_cf_out_inv.Size = new System.Drawing.Size(161, 21);
-            this.cmb_alu_cf_out_inv.TabIndex = 2;
-            this.cmb_alu_cf_out_inv.SelectedIndexChanged += new System.EventHandler(this.cmb_alu_cf_out_inv_SelectedIndexChanged);
+            this.cmb_mar_in_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_mar_in_src.FormattingEnabled = true;
+            this.cmb_mar_in_src.Items.AddRange(new object[] {
+            "MAR IN : ZBus",
+            "MAR IN : PC"});
+            this.cmb_mar_in_src.Location = new System.Drawing.Point(6, 19);
+            this.cmb_mar_in_src.Name = "cmb_mar_in_src";
+            this.cmb_mar_in_src.Size = new System.Drawing.Size(161, 21);
+            this.cmb_mar_in_src.TabIndex = 0;
+            this.cmb_mar_in_src.SelectedIndexChanged += new System.EventHandler(this.cmb_mar_in_src_SelectedIndexChanged);
             // 
-            // groupBox6
+            // groupBox1
             // 
-            this.groupBox6.Controls.Add(this.cmb_zbus);
-            this.groupBox6.Location = new System.Drawing.Point(3, 465);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(173, 47);
-            this.groupBox6.TabIndex = 13;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "ALU to ZBUS";
+            this.groupBox1.Controls.Add(this.btn_imm);
+            this.groupBox1.Controls.Add(this.btn_offset);
+            this.groupBox1.Controls.Add(this.txtInteger);
+            this.groupBox1.Controls.Add(this.cmb_flags_src);
+            this.groupBox1.Controls.Add(this.cmb_cond_sel);
+            this.groupBox1.Controls.Add(this.cmb_next_inst);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(171, 129);
+            this.groupBox1.TabIndex = 11;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Next Micro-Instruction";
             // 
-            // cmb_zbus
+            // btn_imm
             // 
-            this.cmb_zbus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_zbus.FormattingEnabled = true;
-            this.cmb_zbus.Items.AddRange(new object[] {
-            "Normal ALU Result",
-            "Shifted Right",
-            "Shifted Left",
-            "Sign Extend"});
-            this.cmb_zbus.Location = new System.Drawing.Point(6, 19);
-            this.cmb_zbus.Name = "cmb_zbus";
-            this.cmb_zbus.Size = new System.Drawing.Size(161, 21);
-            this.cmb_zbus.TabIndex = 0;
-            this.cmb_zbus.SelectedIndexChanged += new System.EventHandler(this.cmb_zbus_SelectedIndexChanged);
+            this.btn_imm.Location = new System.Drawing.Point(115, 100);
+            this.btn_imm.Name = "btn_imm";
+            this.btn_imm.Size = new System.Drawing.Size(50, 20);
+            this.btn_imm.TabIndex = 9;
+            this.btn_imm.Text = "Imm";
+            this.btn_imm.UseVisualStyleBackColor = true;
+            this.btn_imm.Click += new System.EventHandler(this.btn_imm_Click);
             // 
-            // groupBox7
+            // btn_offset
             // 
-            this.groupBox7.Controls.Add(this.cmb_shift_src);
-            this.groupBox7.Location = new System.Drawing.Point(3, 518);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(173, 47);
-            this.groupBox7.TabIndex = 17;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Shift Src";
+            this.btn_offset.Location = new System.Drawing.Point(59, 100);
+            this.btn_offset.Name = "btn_offset";
+            this.btn_offset.Size = new System.Drawing.Size(50, 20);
+            this.btn_offset.TabIndex = 8;
+            this.btn_offset.Text = "Offset";
+            this.btn_offset.UseVisualStyleBackColor = true;
+            this.btn_offset.Click += new System.EventHandler(this.btn_offset_Click);
             // 
-            // cmb_shift_src
+            // txtInteger
             // 
-            this.cmb_shift_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_shift_src.FormattingEnabled = true;
-            this.cmb_shift_src.Items.AddRange(new object[] {
-            "gnd",
-            "uCF",
-            "CF",
-            "ALU Result [0]",
-            "ALU Result [7]"});
-            this.cmb_shift_src.Location = new System.Drawing.Point(6, 19);
-            this.cmb_shift_src.Name = "cmb_shift_src";
-            this.cmb_shift_src.Size = new System.Drawing.Size(161, 21);
-            this.cmb_shift_src.TabIndex = 0;
-            this.cmb_shift_src.SelectedIndexChanged += new System.EventHandler(this.cmb_shift_src_SelectedIndexChanged);
+            this.txtInteger.Location = new System.Drawing.Point(6, 100);
+            this.txtInteger.Name = "txtInteger";
+            this.txtInteger.Size = new System.Drawing.Size(47, 20);
+            this.txtInteger.TabIndex = 7;
+            this.txtInteger.Text = "0";
             // 
-            // groupBox8
+            // cmb_flags_src
             // 
-            this.groupBox8.Controls.Add(this.cmb_uof);
-            this.groupBox8.Controls.Add(this.cmb_usf);
-            this.groupBox8.Controls.Add(this.cmb_ucf);
-            this.groupBox8.Controls.Add(this.cmb_uzf);
-            this.groupBox8.Location = new System.Drawing.Point(3, 571);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(173, 130);
-            this.groupBox8.TabIndex = 18;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Micro Flags In";
+            this.cmb_flags_src.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_flags_src.FormattingEnabled = true;
+            this.cmb_flags_src.Items.AddRange(new object[] {
+            "CPU Flags",
+            "Microcode Flags"});
+            this.cmb_flags_src.Location = new System.Drawing.Point(6, 73);
+            this.cmb_flags_src.Name = "cmb_flags_src";
+            this.cmb_flags_src.Size = new System.Drawing.Size(159, 21);
+            this.cmb_flags_src.TabIndex = 6;
+            this.cmb_flags_src.SelectedIndexChanged += new System.EventHandler(this.cmb_flags_src_SelectedIndexChanged);
             // 
-            // cmb_uzf
+            // cmb_cond_sel
             // 
-            this.cmb_uzf.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_uzf.FormattingEnabled = true;
-            this.cmb_uzf.Items.AddRange(new object[] {
-            "unchanged",
-            "ALU_ZF",
-            "ALU_ZF && uZF",
-            "gnd"});
-            this.cmb_uzf.Location = new System.Drawing.Point(6, 19);
-            this.cmb_uzf.Name = "cmb_uzf";
-            this.cmb_uzf.Size = new System.Drawing.Size(161, 21);
-            this.cmb_uzf.TabIndex = 0;
-            this.cmb_uzf.SelectedIndexChanged += new System.EventHandler(this.cmb_uzf_SelectedIndexChanged);
+            this.cmb_cond_sel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_cond_sel.FormattingEnabled = true;
+            this.cmb_cond_sel.Items.AddRange(new object[] {
+            "zf",
+            "cf / LU",
+            "sf",
+            "of",
+            "L",
+            "LE",
+            "LEU",
+            "DMA_REQ",
+            "STATUS_MODE",
+            "WAIT",
+            "INT_PENDING",
+            "EXT_INPUT",
+            "STATUS_DIR",
+            "DISPLAY_LOAD",
+            "unused",
+            "unused",
+            "~zf",
+            "~cf / GEU",
+            "~sf",
+            "~of",
+            "GE",
+            "G",
+            "GU",
+            "~DMA_REQ",
+            "~STATUS_MODE",
+            "~WAIT",
+            "~INT_PENDING",
+            "~EXT_PENDING",
+            "~STATUS_DIR",
+            "~DISPLAY_R_LOAD",
+            "unused",
+            "unused"});
+            this.cmb_cond_sel.Location = new System.Drawing.Point(6, 46);
+            this.cmb_cond_sel.Name = "cmb_cond_sel";
+            this.cmb_cond_sel.Size = new System.Drawing.Size(159, 21);
+            this.cmb_cond_sel.TabIndex = 5;
+            this.cmb_cond_sel.SelectedIndexChanged += new System.EventHandler(this.cmb_cond_sel_SelectedIndexChanged);
             // 
-            // cmb_ucf
+            // cmb_next_inst
             // 
-            this.cmb_ucf.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_ucf.FormattingEnabled = true;
-            this.cmb_ucf.Items.AddRange(new object[] {
-            "unchanged",
-            "ALU Final CF",
-            "ALU_OUTPUT_0",
-            "ALU_OUTPUT_7"});
-            this.cmb_ucf.Location = new System.Drawing.Point(6, 46);
-            this.cmb_ucf.Name = "cmb_ucf";
-            this.cmb_ucf.Size = new System.Drawing.Size(161, 21);
-            this.cmb_ucf.TabIndex = 1;
-            this.cmb_ucf.SelectedIndexChanged += new System.EventHandler(this.cmb_ucf_SelectedIndexChanged);
+            this.cmb_next_inst.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb_next_inst.FormattingEnabled = true;
+            this.cmb_next_inst.Items.AddRange(new object[] {
+            "Next by Offset",
+            "Branch",
+            "Next is Fetch",
+            "Next by IR"});
+            this.cmb_next_inst.Location = new System.Drawing.Point(6, 19);
+            this.cmb_next_inst.Name = "cmb_next_inst";
+            this.cmb_next_inst.Size = new System.Drawing.Size(159, 21);
+            this.cmb_next_inst.TabIndex = 4;
+            this.cmb_next_inst.SelectedIndexChanged += new System.EventHandler(this.cmb_next_inst_SelectedIndexChanged);
             // 
-            // cmb_usf
+            // panel1
             // 
-            this.cmb_usf.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_usf.FormattingEnabled = true;
-            this.cmb_usf.Items.AddRange(new object[] {
-            "unchanged",
-            "Z_BUS_7"});
-            this.cmb_usf.Location = new System.Drawing.Point(6, 73);
-            this.cmb_usf.Name = "cmb_usf";
-            this.cmb_usf.Size = new System.Drawing.Size(161, 21);
-            this.cmb_usf.TabIndex = 2;
-            this.cmb_usf.SelectedIndexChanged += new System.EventHandler(this.cmb_usf_SelectedIndexChanged);
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.memo_name);
+            this.panel1.Controls.Add(this.control_list);
+            this.panel1.Controls.Add(this.memo_info);
+            this.panel1.Location = new System.Drawing.Point(200, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(438, 767);
+            this.panel1.TabIndex = 4;
             // 
-            // cmb_uof
+            // memo_name
             // 
-            this.cmb_uof.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_uof.FormattingEnabled = true;
-            this.cmb_uof.Items.AddRange(new object[] {
-            "unchanged",
-            "ALU_OF"});
-            this.cmb_uof.Location = new System.Drawing.Point(6, 100);
-            this.cmb_uof.Name = "cmb_uof";
-            this.cmb_uof.Size = new System.Drawing.Size(161, 21);
-            this.cmb_uof.TabIndex = 3;
-            this.cmb_uof.SelectedIndexChanged += new System.EventHandler(this.cmb_uof_SelectedIndexChanged);
+            this.memo_name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.memo_name.Location = new System.Drawing.Point(0, 552);
+            this.memo_name.Name = "memo_name";
+            this.memo_name.Size = new System.Drawing.Size(438, 20);
+            this.memo_name.TabIndex = 9;
+            this.memo_name.TextChanged += new System.EventHandler(this.memo_name_TextChanged);
             // 
-            // groupBox9
+            // control_list
             // 
-            this.groupBox9.Controls.Add(this.cmb_of_in);
-            this.groupBox9.Controls.Add(this.cmb_sf_in);
-            this.groupBox9.Controls.Add(this.cmb_cf_in);
-            this.groupBox9.Controls.Add(this.cmb_zf_in);
-            this.groupBox9.Location = new System.Drawing.Point(3, 707);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(173, 130);
-            this.groupBox9.TabIndex = 19;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "Arithmetic Flags In";
+            this.control_list.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.control_list.FormattingEnabled = true;
+            this.control_list.Location = new System.Drawing.Point(0, 0);
+            this.control_list.Name = "control_list";
+            this.control_list.Size = new System.Drawing.Size(438, 544);
+            this.control_list.TabIndex = 8;
+            this.control_list.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.control_list_ItemCheck);
+            this.control_list.SelectedIndexChanged += new System.EventHandler(this.control_list_SelectedIndexChanged);
             // 
-            // cmb_zf_in
+            // memo_info
             // 
-            this.cmb_zf_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_zf_in.FormattingEnabled = true;
-            this.cmb_zf_in.Items.AddRange(new object[] {
-            "unchanged",
-            "ALU_ZF",
-            "ALU_ZF && ZF",
-            "ZBUS_0"});
-            this.cmb_zf_in.Location = new System.Drawing.Point(6, 19);
-            this.cmb_zf_in.Name = "cmb_zf_in";
-            this.cmb_zf_in.Size = new System.Drawing.Size(161, 21);
-            this.cmb_zf_in.TabIndex = 0;
-            this.cmb_zf_in.SelectedIndexChanged += new System.EventHandler(this.cmb_zf_in_SelectedIndexChanged);
+            this.memo_info.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.memo_info.Location = new System.Drawing.Point(0, 600);
+            this.memo_info.Multiline = true;
+            this.memo_info.Name = "memo_info";
+            this.memo_info.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.memo_info.Size = new System.Drawing.Size(438, 167);
+            this.memo_info.TabIndex = 4;
+            this.memo_info.KeyDown += new System.Windows.Forms.KeyEventHandler(this.memo_info_KeyDown);
+            this.memo_info.KeyUp += new System.Windows.Forms.KeyEventHandler(this.memo_info_KeyUp);
             // 
-            // cmb_cf_in
+            // list_cycle
             // 
-            this.cmb_cf_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_cf_in.FormattingEnabled = true;
-            this.cmb_cf_in.Items.AddRange(new object[] {
-            "unchanged",
-            "ALU Final CF",
-            "ALU_OUTPUT_0",
-            "ZBUS_1",
-            "ALU_OUTPUT_7"});
-            this.cmb_cf_in.Location = new System.Drawing.Point(6, 46);
-            this.cmb_cf_in.Name = "cmb_cf_in";
-            this.cmb_cf_in.Size = new System.Drawing.Size(161, 21);
-            this.cmb_cf_in.TabIndex = 1;
-            this.cmb_cf_in.SelectedIndexChanged += new System.EventHandler(this.cmb_cf_in_SelectedIndexChanged);
+            this.list_cycle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.list_cycle.Dock = System.Windows.Forms.DockStyle.Right;
+            this.list_cycle.FormattingEnabled = true;
+            this.list_cycle.Location = new System.Drawing.Point(644, 0);
+            this.list_cycle.Name = "list_cycle";
+            this.list_cycle.Size = new System.Drawing.Size(44, 748);
+            this.list_cycle.TabIndex = 3;
+            this.list_cycle.SelectedIndexChanged += new System.EventHandler(this.lstCycles_SelectedIndexChanged);
+            this.list_cycle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.list_cycle_KeyPress);
             // 
-            // cmb_sf_in
+            // list_names
             // 
-            this.cmb_sf_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_sf_in.FormattingEnabled = true;
-            this.cmb_sf_in.Items.AddRange(new object[] {
-            "unchanged",
-            "ZBUS_7",
-            "GND",
-            "ZBUS_2"});
-            this.cmb_sf_in.Location = new System.Drawing.Point(6, 73);
-            this.cmb_sf_in.Name = "cmb_sf_in";
-            this.cmb_sf_in.Size = new System.Drawing.Size(161, 21);
-            this.cmb_sf_in.TabIndex = 2;
-            this.cmb_sf_in.SelectedIndexChanged += new System.EventHandler(this.cmb_sf_in_SelectedIndexChanged);
-            // 
-            // cmb_of_in
-            // 
-            this.cmb_of_in.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmb_of_in.FormattingEnabled = true;
-            this.cmb_of_in.Items.AddRange(new object[] {
-            "unchanged",
-            "ALU_OF",
-            "ZBUS_7",
-            "ZBUS_3",
-            "(U_SF) XOR (ZBUS_7)"});
-            this.cmb_of_in.Location = new System.Drawing.Point(6, 100);
-            this.cmb_of_in.Name = "cmb_of_in";
-            this.cmb_of_in.Size = new System.Drawing.Size(161, 21);
-            this.cmb_of_in.TabIndex = 3;
-            this.cmb_of_in.SelectedIndexChanged += new System.EventHandler(this.cmb_of_in_SelectedIndexChanged);
+            this.list_names.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.list_names.FormattingEnabled = true;
+            this.list_names.Location = new System.Drawing.Point(0, 0);
+            this.list_names.Name = "list_names";
+            this.list_names.Size = new System.Drawing.Size(593, 748);
+            this.list_names.TabIndex = 0;
+            this.list_names.SelectedIndexChanged += new System.EventHandler(this.list_names_SelectedIndexChanged);
             // 
             // tabControl1
             // 
@@ -1158,7 +1165,36 @@
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // Form1
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.onlineInformationToolStripMenuItem,
+            this.toolStripMenuItem3,
+            this.aboutToolStripMenuItem1});
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.aboutToolStripMenuItem.Text = "&Help";
+            // 
+            // aboutToolStripMenuItem1
+            // 
+            this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
+            this.aboutToolStripMenuItem1.Text = "&About";
+            this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem1_Click);
+            // 
+            // onlineInformationToolStripMenuItem
+            // 
+            this.onlineInformationToolStripMenuItem.Name = "onlineInformationToolStripMenuItem";
+            this.onlineInformationToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.onlineInformationToolStripMenuItem.Text = "Online Information...";
+            this.onlineInformationToolStripMenuItem.Click += new System.EventHandler(this.onlineInformationToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(181, 6);
+            // 
+            // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1167,9 +1203,10 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(640, 480);
-            this.Name = "Form1";
+            this.Name = "frmMain";
             this.Text = "Simu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -1182,19 +1219,19 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -1289,6 +1326,10 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem onlineInformationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
     }
 }
 

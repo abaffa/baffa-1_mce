@@ -14,16 +14,16 @@ using System.Windows.Forms;
 
 namespace sol1_simu
 {
-    public partial class Form1 : Form
+    public partial class FrmMain : Form
     {
 
         public class Item
         {
-            public string strText;
-            public string strValue;
+            public string Text;
+            public string Value;
             public override string ToString()
             {
-                return this.strText;
+                return this.Text;
             }
 
         }
@@ -53,7 +53,7 @@ namespace sol1_simu
         String instr_name_clip = "";
         String current_filename = "";
 
-        public Form1()
+        public FrmMain()
         {
             InitializeComponent();
 
@@ -1488,9 +1488,6 @@ namespace sol1_simu
             }
             catch { }
 
-
-
-
             NEW();
 
             openRecentToolStripMenuItem_Click(null, null);
@@ -1546,7 +1543,7 @@ namespace sol1_simu
                     lstInstructions.Items.Clear();
                     for (int i = 0; i < 256; i++)
                     {
-                        lstInstructions.Items.Add(new Item() { strText = instr_names[i], strValue = i.ToString("X2") + ": " + instr_names[i] });
+                        lstInstructions.Items.Add(new Item() { Text = instr_names[i], Value = i.ToString("X2") + ": " + instr_names[i] });
                     }
                 }
             }
@@ -1641,7 +1638,7 @@ namespace sol1_simu
             for (int i = 0; i < 256; i++)
             {
                 list_names.Items.Add(i.ToString("X2") + ": " + instr_names[i]);
-                lstInstructions.Items.Add(new Item() { strText = instr_names[i], strValue = i.ToString("X2") + ": " + instr_names[i] });
+                lstInstructions.Items.Add(new Item() { Text = instr_names[i], Value = i.ToString("X2") + ": " + instr_names[i] });
             }
 
             cycle_nbr = 0;
@@ -1670,9 +1667,9 @@ namespace sol1_simu
 
         private void lstInstructions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstInstructions.SelectedIndex != -1 && list_names.Items.IndexOf(((Item)lstInstructions.SelectedItem).strValue) != -1)
+            if (lstInstructions.SelectedIndex != -1 && list_names.Items.IndexOf(((Item)lstInstructions.SelectedItem).Value) != -1)
             {
-                list_names.SelectedIndex = list_names.Items.IndexOf(((Item)lstInstructions.SelectedItem).strValue);
+                list_names.SelectedIndex = list_names.Items.IndexOf(((Item)lstInstructions.SelectedItem).Value);
                 tabControl1.SelectedIndex = 0;
             }
 
@@ -1810,7 +1807,7 @@ namespace sol1_simu
             {
                 foreach (Item i in lstInstructions.Items)
                 {
-                        sw.WriteLine(i.strValue);
+                        sw.WriteLine(i.Value);
                 }
             }
             
@@ -1844,6 +1841,19 @@ namespace sol1_simu
                 //list_cycle.SelectedIndexChanged += lstCycles_SelectedIndexChanged;
                 disabledLst = false;
             }
+        }
+
+        private void onlineInformationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://sol-1.baffasoft.com.br/");
+        }
+
+        private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FrmAbout frmAbout = new FrmAbout();
+            
+            frmAbout.ShowDialog(this);
+            
         }
 
         bool disabledCmb = false;
