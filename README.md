@@ -11,6 +11,8 @@ The emulator software is available at https://github.com/abaffa/sol-1_emulator.
 
 The computer original software (bios, kernel, assembly programs, ...) are available at https://github.com/abaffa/SOL1_MiniComputer.
 
+![sol1_simu](_release/sol1_simu.png)
+
 -----BEGIN LICENSE NOTICE----- 
 
 Sol-1 Simu for HomebrewCPU Minicomputer System
