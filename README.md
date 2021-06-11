@@ -1,21 +1,18 @@
-# Sol-1 Microcode Editor for HomebrewCPU Minicomputer System Emulator
+# Sol-1 Microcode Editor for Sol-1 HomebrewCPU Minicomputer System
 
-This is a microcode editor for Sol-1 HomebrewCPU Minicomputer - A complete CPU and Minicomputer built from scratch in 74HC logic, 
-created by Paulo de Tarco Constantino Junior, (http://sol-1.org).
+This is a microcode editor for Sol-1 HomebrewCPU Minicomputer - A complete CPU and Minicomputer built from scratch in 74HC logic, created by Paulo de Tarco Constantino Junior (http://sol-1.org). Sol-1 project is inspired by [Bill Buzbee's work](http://homebrewcpu.com) on the [Magic-1 Minicomputer](http://www.magic-1.org/)
 
-His project is inspired by [Bill Buzbee's work](http://homebrewcpu.com), the [Magic-1 Minicomputer](http://www.magic-1.org/) and it is available at [SOL1_MiniComputer Repository](https://github.com/Pconst167/SOL1_MiniComputer).
+The original computer softwares (bios, kernel, sample assembly language programs, ...) are available at https://github.com/abaffa/SOL1_MiniComputer.
 
 I've written an emulator for software testing that is running at http://sol-1.baffasoft.com.br.
 
 The emulator software is available at https://github.com/abaffa/sol-1_emulator.
 
-The computer original software (bios, kernel, assembly programs, ...) are available at https://github.com/abaffa/SOL1_MiniComputer.
-
 ![sol1_simu](_release/sol1_simu.png)
 
 -----BEGIN LICENSE NOTICE----- 
 
-Sol-1 Simu for HomebrewCPU Minicomputer System
+Sol-1 Simu for Sol-1 HomebrewCPU Minicomputer System
 
 Copyright (C) 2021  Augusto Baffa, (sol-1.baffasoft.com.br)
 
