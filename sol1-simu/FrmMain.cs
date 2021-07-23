@@ -79,13 +79,13 @@ namespace sol1_simu
 
             String[] microcode = {
                 "next_0", "next_1", "offset_0", "offset_1", "offset_2", "offset_3", "offset_4", "offset_5", "offset_6", "cond_inv", "cond_flags_src", "cond_sel_0",
-                "cond_sel_1", "cond_sel_2", "cond_sel_3", "ESCAPE", "uzf_in_src_0", "uzf_in_src_1", "ucf_in_src_0", "ucf_in_src_1", "usf_in_src", "uof_in_src", "IR_wrt", "status_wrt",
+                "cond_sel_1", "cond_sel_2", "cond_sel_3", "escape_0", "uzf_in_src_0", "uzf_in_src_1", "ucf_in_src_0", "ucf_in_src_1", "usf_in_src", "uof_in_src", "IR_wrt", "status_wrt",
                 "shift_src_0", "shift_src_1", "shift_src_2", "zbus_out_src_0", "zbus_out_src_1", "alu_a_src_0", "alu_a_src_1", "alu_a_src_2", "alu_a_src_3", "alu_a_src_4", "alu_a_src_5",
                 "alu_op_0", "alu_op_1", "alu_op_2", "alu_op_3", "alu_mode", "alu_cf_in_src_0", "alu_cf_in_src_1", "alu_cf_in_inv", "zf_in_src_0", "zf_in_src_1", "alu_cf_out_inv",
                 "cf_in_src_0", "cf_in_src_1", "cf_in_src_2", "sf_in_src_0", "sf_in_src_1", "of_in_src_0", "of_in_src_1", "of_in_src_2", "rd", "wr", "alu_b_src_0", "alu_b_src_1",
                 "alu_b_src_2", "display_reg_load", "dl_wrt", "dh_wrt", "cl_wrt", "ch_wrt", "bl_wrt", "bh_wrt", "al_wrt", "ah_wrt", "mdr_in_src", "mdr_out_src", "mdr_out_en",
                 "mdrl_wrt", "mdrh_wrt", "tdrl_wrt", "tdrh_wrt", "dil_wrt", "dih_wrt", "sil_wrt", "sih_wrt", "marl_wrt", "marh_wrt", "bpl_wrt", "bph_wrt", "pcl_wrt", "pch_wrt",
-                "spl_wrt", "sph_wrt", "-", "-", "int_vector_wrt", "mask_flags_wrt", "mar_in_src", "int_ack", "clear_all_ints", "ptb_wrt", "pagtbl_ram_we", "mdr_to_pagtbl_en",
+                "spl_wrt", "sph_wrt", "escape_1", "esc_in_src", "int_vector_wrt", "mask_flags_wrt", "mar_in_src", "int_ack", "clear_all_ints", "ptb_wrt", "pagtbl_ram_we", "mdr_to_pagtbl_en",
                 "force_user_ptb", "-", "-", "-", "-", "gl_wrt", "gh_wrt", "imm_0", "imm_1", "imm_2", "imm_3", "imm_4", "imm_5", "imm_6", "imm_7", "-", "-", "-", "-", "-", "-", "-", "-"
             };
 
@@ -1744,7 +1744,10 @@ namespace sol1_simu
                     byte[] fileBytes = File.ReadAllBytes(name);
                     j = 0;
                     foreach (byte b in fileBytes)
-                        ROMS[i][j++] = b;
+                    {
+                        ROMS[i][j] = b;
+                        j++;
+                    }
 
 
                 }
@@ -1807,10 +1810,10 @@ namespace sol1_simu
             {
                 foreach (Item i in lstInstructions.Items)
                 {
-                        sw.WriteLine(i.Value);
+                    sw.WriteLine(i.Value);
                 }
             }
-            
+
             if (File.Exists(filename))
                 return true;
 
@@ -1851,9 +1854,9 @@ namespace sol1_simu
         private void aboutToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             FrmAbout frmAbout = new FrmAbout();
-            
+
             frmAbout.ShowDialog(this);
-            
+
         }
 
         bool disabledCmb = false;
