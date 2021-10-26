@@ -74,7 +74,7 @@ namespace sol1_simu
 
 
             list_names.MultiColumn = true;
-            list_names.ColumnWidth = 200;
+            list_names.ColumnWidth = 310;
 
             lstInstructions.MultiColumn = true;
             lstInstructions.ColumnWidth = 200;
@@ -141,6 +141,9 @@ namespace sol1_simu
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveFileDialog1.FileName = "rom";
+            saveFileDialog1.Filter = "Rom files (rom*.*)|rom*.*|All files (*.*)|*.*";
+
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string filename = saveFileDialog1.FileName;
@@ -172,7 +175,34 @@ namespace sol1_simu
         }
 
 
+        public string format_memo_name(string tmp_instr_name)
+        {
+            tmp_instr_name = tmp_instr_name.Trim();
+            tmp_instr_name = tmp_instr_name.Replace(", ", ",");
+            tmp_instr_name = tmp_instr_name.Replace(" + ", "+");
+            tmp_instr_name = tmp_instr_name.Replace(" - ", "-");
+            tmp_instr_name = tmp_instr_name.Replace(" * ", "*");
+            tmp_instr_name = tmp_instr_name.Replace(" ^ ", "^");
+            tmp_instr_name = tmp_instr_name.Replace(" / ", "/");
 
+            tmp_instr_name = tmp_instr_name.Replace(" \\ ", "\\");
+            tmp_instr_name = tmp_instr_name.Replace(" | ", "|");
+
+            tmp_instr_name = tmp_instr_name.Replace("\t", " ");
+            tmp_instr_name = tmp_instr_name.Replace("  ", " ");
+
+            //tmp_instr_name = tmp_instr_name.Replace("/", "\\");
+            //tmp_instr_name = tmp_instr_name.Replace("-", "|");
+
+            tmp_instr_name = tmp_instr_name.Replace(",", ", ");
+            tmp_instr_name = tmp_instr_name.Replace("+", " + ");
+            tmp_instr_name = tmp_instr_name.Replace("-", " - ");
+            tmp_instr_name = tmp_instr_name.Replace("*", " * ");
+            tmp_instr_name = tmp_instr_name.Replace("/", " / ");
+            tmp_instr_name = tmp_instr_name.Replace("^", " ^ ");
+            tmp_instr_name = tmp_instr_name.Replace("|", " | ");
+            return tmp_instr_name;
+        }
         void write_cycle()
         {
 
@@ -182,7 +212,11 @@ namespace sol1_simu
             if (mnu_readonly.Checked == true) return;
 
             info[cycle_nbr] = memo_info.Text;
-            instr_names[cycle_nbr / CYCLES_PER_INSTR] = memo_name.Text;
+
+            string tmp_instr_name = format_memo_name(memo_name.Text);
+
+            if (tmp_instr_name != instr_names[cycle_nbr / CYCLES_PER_INSTR])
+                instr_names[cycle_nbr / CYCLES_PER_INSTR] = tmp_instr_name;
 
             disable_lst_refresh();
             for (int i = 0; i < 15 * 8; i++)
@@ -377,6 +411,20 @@ namespace sol1_simu
                 list_names.Items.Clear();
                 for (i = 0; i < 256; i++)
                 {
+                    if (instr_names[i] == null)
+                        instr_names[i] = "";
+
+                    /*
+                    if (instr_names[i].IndexOf("-") > -1)
+                    {
+                        string tmp_instr_name = format_memo_name(instr_names[i].ToUpper());
+                        instr_names[i] = tmp_instr_name;
+                    }
+                    */
+                    /*
+                    string tmp_instr_name = format_memo_name(instr_names[i].ToLower());
+                    instr_names[i] = tmp_instr_name;
+                    */
                     list_names.Items.Add(i.ToString("X2") + ": " + instr_names[i]);
                 }
 
@@ -1061,7 +1109,6 @@ namespace sol1_simu
 
         private void mnu_readonly_Click(object sender, EventArgs e)
         {
-
             set_readonly(!mnu_readonly.Checked);
         }
 
@@ -1374,7 +1421,7 @@ namespace sol1_simu
 
         private void memo_name_TextChanged(object sender, EventArgs e)
         {
-            write_cycle();
+            //write_cycle();
         }
 
         private void list_cycle_KeyPress(object sender, KeyPressEventArgs e)
@@ -1498,14 +1545,14 @@ namespace sol1_simu
             double count = 0.0;
             double average;
 
-            for (i = 2; i < 256; i++)
+            for (i = 0; i < 256; i++)
             {
                 for (j = 63; j >= 0; j--)
                 {
                     if ((ROMS[0][i * 64 + j] & 0x03) == 0x02)
                     {
                         count = count + (float)(j + 1);
-                        msg += i.ToString() + ":" + (j + 1).ToString() + "\n";
+                        msg += i.ToString("X2") + ": " + (j + 1).ToString() + "\r\n";
                         break;
                     }
                 }
@@ -1513,49 +1560,104 @@ namespace sol1_simu
 
             average = (count + 2) / 255.0; // the +2 accounts for fetch
 
-            msg += average.ToString("N2") + "\n";
+            msg += "Average: " + average.ToString("N2") + "\r\n";
+            control_info.Text = msg;
+
+        }
 
 
+        private string create_tasm_instruction(int icode, int escape, string instr_name)
+        {
+            String inst = instr_name;
+            int len = escape > 0 ? 2 : 1;
+
+            len += Regex.Matches(instr_name, "i8").Count;
+            len += Regex.Matches(instr_name, "u8").Count;
+            len += (Regex.Matches(instr_name, "i16").Count * 2);
+            len += (Regex.Matches(instr_name, "u16").Count * 2);
+
+            inst = inst.Replace("i8", "@");
+            inst = inst.Replace("u8", "@");
+            inst = inst.Replace("i16", "@");
+            inst = inst.Replace("u16", "@");
+
+            inst = inst.Replace(", ", ",");
+            inst = inst.Replace(" + ", "+");
+            inst = inst.Replace(" - ", "-");
+            inst = inst.Replace(" * ", "*");
+            inst = inst.Replace(" ^ ", "^");
+
+
+            string _params = icode.ToString("X2");
+
+            if (escape == 1) _params += "FD";
+
+            _params += "\t\t" + len.ToString();
+            _params += "\t\t NOP \t\t 1";
+
+            string line = "";
+            if (inst.IndexOf('\\') > -1)
+            {
+                String[] tokens = inst.Split('\\');
+                String inst_params = inst.IndexOf(' ') > -1 ? inst.Substring(inst.IndexOf(' ')) : "";
+                foreach (String t in tokens)
+                {
+                    if (t.IndexOf(' ') > -1)
+                        line += t.Substring(0, t.IndexOf(' ')).ToUpper();
+                    else
+                        line += t.ToUpper();
+
+                    line += inst_params;
+                    line += "\t\t\t";
+                    line += _params + "\r\n";
+                }
+
+                line = line.Trim(new char[] { '\r', '\n' });
+            }
+            else
+            {
+                line = inst.ToUpper();
+                line += "\t\t\t";
+                line += _params;
+            }
+
+            return line;
         }
 
         private void generateTASMTableToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
-            int len = 0;
-            string[] inst = new string[NBR_INSTRUCTIONS];
+
+            //string[] inst = new string[NBR_INSTRUCTIONS];
 
             if (MessageBox.Show("Generate table?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                saveFileDialog1.FileName = "minicomputer.tab";
+                saveFileDialog1.Filter = "Tasm files (*.tab)|*.tab|All files (*.*)|*.*";
 
-                StreamWriter sw = new StreamWriter("minicomputer.tab", false);
-
-
-                for (int i = 0; i < NBR_INSTRUCTIONS; i++)
+                if (saveFileDialog1.ShowDialog(this) == DialogResult.OK)
                 {
-                    inst[i] = instr_names[i];
+                    StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false);
 
-                    len = 0;
+                    sw.WriteLine("\"TASMSOL\"");
+                    sw.WriteLine(".ALTWILD");
+                    sw.WriteLine("");
 
-                    len += Regex.Matches(instr_names[i], "i8").Count;
-                    len += Regex.Matches(instr_names[i], "u8").Count;
-                    len += Regex.Matches(instr_names[i], "i16").Count;
-                    len += Regex.Matches(instr_names[i], "u16").Count;
+                    for (int i = 1; i < NBR_INSTRUCTIONS; i++)
+                    {
+                        if(i % 0x10 == 0) sw.WriteLine("");
 
-                    inst[i] = inst[i].Replace("i8", "*");
-                    inst[i] = inst[i].Replace("u8", "*");
-                    inst[i] = inst[i].Replace("i16", "*");
-                    inst[i] = inst[i].Replace("u16", "*");
-
-                    string line = inst[i];
-                    line += "\t\t\t";
-                    line += i.ToString("X2");
-                    line += "\t\t" + len.ToString();
-                    line += "\t\t NOP \t\t 1";
-                    sw.WriteLine(line);
+                        if (instr_names[i].IndexOf('|') > -1)
+                        {
+                            String[] instrs = instr_names[i].Split('|');
+                            for (int j = instrs.Length - 1; j >= 0; j--)
+                                sw.WriteLine(create_tasm_instruction(i, j, instrs[j].Trim()));
+                        }
+                        else
+                            sw.WriteLine(create_tasm_instruction(i, 0, instr_names[i].Trim()));
+                    }
+                    sw.Close();
                 }
-                sw.Close();
-
-
             }
 
         }
@@ -1727,11 +1829,19 @@ namespace sol1_simu
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+            string filename = "";
+
+            IniFile ini = new IniFile(System.Environment.CurrentDirectory + "\\" + "config.ini");
+            //filename = ini.IniReadValue("general", "last_microcode_open");
+
+            openFileDialog1.FileName = filename;
+            openFileDialog1.Filter = "Rom files (rom*.*)|rom*.*|All files (*.*)|*.*";
+
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                string filename = openFileDialog1.FileName;
+                filename = openFileDialog1.FileName;
 
-                IniFile ini = new IniFile(System.Environment.CurrentDirectory + "\\" + "config.ini");
+                //IniFile ini = new IniFile(System.Environment.CurrentDirectory + "\\" + "config.ini");
                 ini.IniWriteValue("general", "last_microcode_open", filename);
 
                 if (READ(filename))
@@ -1977,6 +2087,8 @@ namespace sol1_simu
             memo_info.ReadOnly = mnu_readonly.Checked;
             control_info.Visible = chk;
 
+            calculateAvgCyclesPerInstructionToolStripMenuItem.Visible = chk;
+
         }
 
 
@@ -2107,6 +2219,11 @@ namespace sol1_simu
             }
 
             e.DrawFocusRectangle();
+        }
+
+        private void memo_name_Leave(object sender, EventArgs e)
+        {
+            write_cycle();
         }
 
         bool disabledCmb = false;

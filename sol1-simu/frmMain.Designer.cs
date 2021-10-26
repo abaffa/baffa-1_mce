@@ -264,7 +264,7 @@
             this.microcodeEditorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnu_readonly});
             this.microcodeEditorToolStripMenuItem.Name = "microcodeEditorToolStripMenuItem";
-            this.microcodeEditorToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.microcodeEditorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.microcodeEditorToolStripMenuItem.Text = "Microcode Editor";
             // 
             // mnu_readonly
@@ -288,7 +288,6 @@
             this.calculateAvgCyclesPerInstructionToolStripMenuItem.Name = "calculateAvgCyclesPerInstructionToolStripMenuItem";
             this.calculateAvgCyclesPerInstructionToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
             this.calculateAvgCyclesPerInstructionToolStripMenuItem.Text = "Calculate Avg. Cycles per Instruction";
-            this.calculateAvgCyclesPerInstructionToolStripMenuItem.Visible = false;
             this.calculateAvgCyclesPerInstructionToolStripMenuItem.Click += new System.EventHandler(this.calculateAvgCyclesPerInstructionToolStripMenuItem_Click);
             // 
             // generateTASMTableToolStripMenuItem
@@ -1138,6 +1137,7 @@
             this.memo_name.Size = new System.Drawing.Size(438, 20);
             this.memo_name.TabIndex = 9;
             this.memo_name.TextChanged += new System.EventHandler(this.memo_name_TextChanged);
+            this.memo_name.Leave += new System.EventHandler(this.memo_name_Leave);
             // 
             // control_list
             // 
@@ -1216,7 +1216,6 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1299, 22);
             this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // FrmMain
             // 
