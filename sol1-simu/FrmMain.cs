@@ -53,6 +53,8 @@ namespace sol1_simu
         String instr_name_clip = "";
         String current_filename = "";
 
+        int[] microcode_enable;
+
         public FrmMain()
         {
             InitializeComponent();
@@ -88,6 +90,19 @@ namespace sol1_simu
                 "spl_wrt", "sph_wrt", "escape_1", "esc_in_src", "int_vector_wrt", "mask_flags_wrt", "mar_in_src", "int_ack", "clear_all_ints", "ptb_wrt", "pagtbl_ram_we", "mdr_to_pagtbl_en",
                 "force_user_ptb", "-", "-", "-", "-", "gl_wrt", "gh_wrt", "imm_0", "imm_1", "imm_2", "imm_3", "imm_4", "imm_5", "imm_6", "imm_7", "-", "-", "-", "-", "-", "-", "-", "-"
             };
+
+            int[] microcode_enable2 = {
+                2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2,
+                2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 0, 0,
+                2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+                2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+                2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2,
+                2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 1,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 1, 2, 0, 0, 2, 1, 1, 0, 1, 1,
+                1, 3, 3, 3, 3, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3
+            };
+            microcode_enable = microcode_enable2;
 
             control_list.MultiColumn = true;
             control_list.ColumnWidth = 110;
@@ -448,10 +463,12 @@ namespace sol1_simu
                   | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_2"))) << 2
                   | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_3"))) << 3
                   | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_4"))) << 4
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_5"))) << 5
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_6"))) << 6;
+                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_5"))) << 5;
 
-                offset = offset | ((offset << 1) & 0x80);
+                if (control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_6")))
+                    offset = offset | (0xFF << 6);
+
+                //offset = offset | ((offset << 1) & 0x80);
                 if (txtInteger.Text != offset.ToString())
                     txtInteger.Text = offset.ToString();
 
@@ -510,9 +527,179 @@ namespace sol1_simu
 
                 enable_cmb_refresh();
                 enable_lst_refresh();
+
+                control_info_refresh();
             }
+
         }
 
+        string HexConverted(string strBinary)
+        {
+            string strHex = Convert.ToInt32(strBinary, 2).ToString("X");
+            return strHex;
+        }
+
+
+        private string write_esp_info(string last_single_code, string last_single_code_settings)
+        {
+            string extra_desc = "";
+
+            if (last_single_code == "next" && cmb_next_inst.SelectedIndex > -1)
+                extra_desc = "(" + cmb_next_inst.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "cond_sel" && cmb_cond_sel.SelectedIndex > -1)
+                extra_desc = "(" + cmb_cond_sel.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "alu_a_src" && cmb_alu_a_mux.SelectedIndex > -1)
+                extra_desc = "(" + cmb_alu_a_mux.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "alu_b_src" && cmb_alu_b_mux.SelectedIndex > -1)
+                extra_desc = "(" + cmb_alu_b_mux.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "alu_op" && cmbAluOp.SelectedIndex > -1)
+                extra_desc = "(ALU OP: " + cmbAluOp.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "alu_cf_in_src" && cmb_alu_cf_in.SelectedIndex > -1)
+                extra_desc = "(" + cmb_alu_cf_in.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "zbus_out_src" && cmb_zbus.SelectedIndex > -1)
+                extra_desc = "(" + cmb_zbus.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "shift_src" && cmb_shift_src.SelectedIndex > -1)
+                extra_desc = "(" + cmb_shift_src.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "uzf_in_src" && cmb_uzf.SelectedIndex > -1)
+                extra_desc = "(" + cmb_uzf.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "ucf_in_src" && cmb_ucf.SelectedIndex > -1)
+                extra_desc = "(" + cmb_ucf.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "zf_in_src" && cmb_zf_in.SelectedIndex > -1)
+                extra_desc = "(" + cmb_zf_in.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "cf_in_src" && cmb_cf_in.SelectedIndex > -1)
+                extra_desc = "(" + cmb_cf_in.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "sf_in_src" && cmb_sf_in.SelectedIndex > -1)
+                extra_desc = "(" + cmb_sf_in.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "of_in_src" && cmb_of_in.SelectedIndex > -1)
+                extra_desc = "(" + cmb_of_in.SelectedItem.ToString() + ")";
+
+            else if (last_single_code == "offset")
+            {
+                if (last_single_code_settings[0] == '1')
+                    extra_desc = "(0x" + HexConverted("1111111" + last_single_code_settings) + ")";
+                else
+                    extra_desc = "(0x" + HexConverted(last_single_code_settings) + ")";
+            }
+
+            else if (last_single_code == "imm")
+                extra_desc = "(0x" + HexConverted(last_single_code_settings) + ")";
+
+            return last_single_code.PadRight(15) + " = " + last_single_code_settings.PadRight(9) + extra_desc + "\n";
+        }
+        private void control_info_refresh()
+        {
+
+            control_info.Text = "";
+
+            string last_single_code = "";
+            string last_single_code_settings = "";
+
+
+            String mc_settings = "";
+            String mc_enabled = "";
+
+            for (int i = 0; i < control_list.Items.Count; i++)
+            {
+                string current_code = control_list.Items[i].ToString();
+                int last_underscore = current_code.LastIndexOf('_');
+
+                string last_token = last_underscore > -1 ? current_code.Substring(last_underscore + 1) : current_code;
+
+                int num = -1;
+                if (last_underscore > -1)
+                    if (!int.TryParse(last_token, out num))
+                        num = -1;
+
+                string single_code = num == -1 ? current_code : current_code.Substring(0, last_underscore);
+
+
+                if (last_single_code != "" && last_single_code_settings != "" && single_code != last_single_code)
+                {
+                    mc_settings += write_esp_info(last_single_code, last_single_code_settings);
+                    last_single_code_settings = "";
+                }
+
+
+                if (microcode_enable[i] == 0 && !control_list.CheckedIndices.Contains(i))
+                {
+                    mc_enabled += " * " + current_code + "\n";
+                }
+                else if (microcode_enable[i] == 1 && control_list.CheckedIndices.Contains(i))
+                {
+                    mc_enabled += " * " + current_code + "\n";
+                }
+                else if (microcode_enable[i] == 2)
+                {
+                    int value = control_list.CheckedIndices.Contains(i) ? 1 : 0;
+
+                    if (num != -1)
+                    {
+                        last_single_code_settings = value.ToString() + last_single_code_settings;
+                    }
+                    else
+                    {
+                        string extra_desc = "";
+
+                        if (control_list.Items[i].ToString() == "cond_flags_src" && cmb_flags_src.SelectedIndex > -1)
+                            extra_desc = "(" + cmb_flags_src.SelectedItem.ToString() + ")";
+
+                        else if (control_list.Items[i].ToString() == "mar_in_src" && cmb_mar_in_src.SelectedIndex > -1)
+                            extra_desc = "(" + cmb_mar_in_src.SelectedItem.ToString() + ")";
+
+                        else if (control_list.Items[i].ToString() == "mdr_in_src" && cmb_mdr_in_src.SelectedIndex > -1)
+                            extra_desc = "(" + cmb_mdr_in_src.SelectedItem.ToString() + ")";
+
+                        else if (control_list.Items[i].ToString() == "mdr_out_src" && cmb_mdr_out_src.SelectedIndex > -1)
+                            extra_desc = "(" + cmb_mdr_out_src.SelectedItem.ToString() + ")";
+
+                        else if (control_list.Items[i].ToString() == "alu_cf_out_inv" && cmb_alu_cf_out_inv.SelectedIndex > -1)
+                            extra_desc = "(" + cmb_alu_cf_out_inv.SelectedItem.ToString() + ")";
+
+                        else if (control_list.Items[i].ToString() == "usf_in_src" && cmb_usf.SelectedIndex > -1)
+                            extra_desc = "(" + cmb_usf.SelectedItem.ToString() + ")";
+
+                        else if (control_list.Items[i].ToString() == "uof_in_src" && cmb_uof.SelectedIndex > -1)
+                            extra_desc = "(" + cmb_uof.SelectedItem.ToString() + ")";
+
+                        else if (control_list.Items[i].ToString() == "alu_cf_in_inv" && value == 0)
+                            extra_desc = "(Carry-in not inverted)";
+                        else if (control_list.Items[i].ToString() == "alu_cf_in_inv" && value == 1)
+                            extra_desc = "(Carry-in inverted)";
+
+                        else if (control_list.Items[i].ToString() == "alu_mode" && cmbAluOp.SelectedIndex > -1)
+                            extra_desc = "(ALU OP: " + cmbAluOp.SelectedItem.ToString() + ")";
+
+                        if (control_list.Items[i].ToString() != "esc_in_src")
+                            mc_settings += control_list.Items[i].ToString().PadRight(15) + " = " + value.ToString().PadRight(9) + extra_desc + "\n";
+                    }
+                }
+
+                last_single_code = single_code;
+            }
+
+            if (last_single_code != "" && last_single_code_settings != "")
+            {
+                mc_settings += write_esp_info(last_single_code, last_single_code_settings);
+                last_single_code_settings = "";
+            }
+
+            mc_enabled = String.Join("\r\n", mc_enabled.Split('\n').OrderBy(c => c).ToArray()).Trim(new Char[] { '\r', '\n' });
+            mc_settings = String.Join("\r\n", mc_settings.Split('\n').OrderBy(c => c).ToArray()).Trim(new Char[] { '\r', '\n' });
+            control_info.Text = mc_settings + (mc_enabled == "" ? "" : "\r\n----------------------\r\n" + mc_enabled);
+        }
 
         //////////////////////////
         //Next Micro-Instruction
@@ -759,7 +946,7 @@ namespace sol1_simu
             int index = cmb_zbus.SelectedIndex;
             control_list.SetItemChecked(control_list.Items.IndexOf("zbus_out_src_0"), (index & 0x01) != 0);
             control_list.SetItemChecked(control_list.Items.IndexOf("zbus_out_src_1"), (index & 0x02) != 0);
-            disable_lst_refresh();
+            enable_lst_refresh();
             write_cycle();
         }
         //////////////////////////
@@ -865,7 +1052,8 @@ namespace sol1_simu
 
         private void mnu_readonly_Click(object sender, EventArgs e)
         {
-            mnu_readonly.Checked = !mnu_readonly.Checked;
+
+            set_readonly(!mnu_readonly.Checked);
         }
 
         private void mnu_new_Click(object sender, EventArgs e)
@@ -892,7 +1080,7 @@ namespace sol1_simu
                 list_names.Items.Add(i.ToString("X2") + ": ");
             }
 
-            mnu_readonly.Checked = false;
+            set_readonly(false);
             update_display();
         }
 
@@ -975,6 +1163,7 @@ namespace sol1_simu
                 disable_lst_refresh();
                 control_list.SetItemCheckState(e.Index, e.NewValue);
                 enable_lst_refresh();
+                control_info_refresh();
             }
             write_cycle();
         }
@@ -1287,7 +1476,7 @@ namespace sol1_simu
 
         private void btnHexEditor_Click(object sender, EventArgs e)
         {
-            Process.Start("C:\\Program Files\\HxD\\HxD.exe");
+            Process.Start("C:\\Program Files\\HxD\\HxD64.exe");
         }
 
         private void calculateAvgCyclesPerInstructionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1757,12 +1946,27 @@ namespace sol1_simu
                     list_names.Items.Add(i.ToString("X2") + ": " + instr_names[i]);
                 }
 
-                mnu_readonly.Checked = true;
+                set_readonly(true);
                 return true;
             }
             return false;
         }
 
+
+        void set_readonly(bool chk)
+        {
+            mnu_readonly.Checked = chk;
+
+            foreach (String item in control_list.Items)
+            {
+                //   item.Enabled = !mnu_readonly.Checked;
+            }
+
+            memo_name.ReadOnly = mnu_readonly.Checked;
+            memo_info.ReadOnly = mnu_readonly.Checked;
+            control_info.Visible = chk;
+
+        }
 
 
 
@@ -1843,6 +2047,8 @@ namespace sol1_simu
                 list_names.SelectedIndexChanged += list_names_SelectedIndexChanged;
                 //list_cycle.SelectedIndexChanged += lstCycles_SelectedIndexChanged;
                 disabledLst = false;
+
+                control_info_refresh();
             }
         }
 
