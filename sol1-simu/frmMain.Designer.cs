@@ -1169,11 +1169,13 @@
             // 
             this.list_cycle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.list_cycle.Dock = System.Windows.Forms.DockStyle.Right;
+            this.list_cycle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.list_cycle.FormattingEnabled = true;
             this.list_cycle.Location = new System.Drawing.Point(643, 0);
             this.list_cycle.Name = "list_cycle";
             this.list_cycle.Size = new System.Drawing.Size(44, 724);
             this.list_cycle.TabIndex = 3;
+            this.list_cycle.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.list_cycle_DrawItem);
             this.list_cycle.SelectedIndexChanged += new System.EventHandler(this.lstCycles_SelectedIndexChanged);
             this.list_cycle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.list_cycle_KeyPress);
             // 

@@ -398,6 +398,15 @@ namespace sol1_simu
                 if (memo_name.Text != instr_names[cycle_nbr / CYCLES_PER_INSTR])
                     memo_name.Text = instr_names[cycle_nbr / CYCLES_PER_INSTR];
 
+                for (i = 0; i < 64; i++)
+                {
+                    if (instr_names[i / CYCLES_PER_INSTR].Trim() != "")
+                    {
+                        //list_cycle.Items[i]
+                    }
+                }
+
+
                 index = (int)(cycle_nbr / CYCLES_PER_INSTR);
                 if (list_names.SelectedIndex != index)
                     list_names.SelectedIndex = index;
@@ -1358,6 +1367,8 @@ namespace sol1_simu
                 //list_cycle.ClearSelected();
                 list_cycle.SetSelected(0, true);
                 //list_names.SetSelected(cycle_nbr / CYCLES_PER_INSTR, true);
+
+                list_cycle.Refresh();
             }
         }
 
@@ -2063,6 +2074,39 @@ namespace sol1_simu
 
             frmAbout.ShowDialog(this);
 
+        }
+
+        private void list_cycle_DrawItem(object sender, DrawItemEventArgs e)
+        {
+
+            e.DrawBackground();
+            bool selected = ((e.State & DrawItemState.Selected) == DrawItemState.Selected);
+
+            int index = e.Index;
+            if (index >= 0 && index < list_cycle.Items.Count)
+            {
+                string text = list_cycle.Items[index].ToString();
+                Graphics g = e.Graphics;
+
+                //background:
+                Font cfont = e.Font;
+
+                SolidBrush backgroundBrush = (selected) ? new SolidBrush(SystemColors.Highlight) : new SolidBrush(SystemColors.MenuBar);
+                SolidBrush foregroundBrush = (selected) ? new SolidBrush(SystemColors.HighlightText) : new SolidBrush(SystemColors.GrayText);
+
+                if (!selected && info[(instr_nbr * CYCLES_PER_INSTR) + index].Trim() != "")
+                {
+                    backgroundBrush = new SolidBrush(SystemColors.Window);
+                    foregroundBrush = new SolidBrush(SystemColors.WindowText);
+                }
+
+                g.FillRectangle(backgroundBrush, e.Bounds);
+
+                //text:                
+                g.DrawString(text, cfont, foregroundBrush, list_cycle.GetItemRectangle(index).Location);
+            }
+
+            e.DrawFocusRectangle();
         }
 
         bool disabledCmb = false;
