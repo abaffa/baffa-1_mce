@@ -16,62 +16,37 @@ namespace sol1_simu
 {
     public partial class FrmMain : Form
     {
-
-        public class Item
-        {
-            public string Text;
-            public string Value;
-            public override string ToString()
-            {
-                return this.Text;
-            }
-
-        }
-
-        const int NBR_ROMS = 15;
-        const int TOTAL_CONTROL_BITS = NBR_ROMS * 8;
-        const int CYCLES_PER_INSTR = 64;
-        const int NBR_INSTRUCTIONS = 256;
-        const int TOTAL_CYCLES = CYCLES_PER_INSTR * NBR_INSTRUCTIONS;
-
-        const int STRING_LEN = 256;
-        const int INFO_LEN = 256;
-
-        byte[][] ROMS = new byte[NBR_ROMS][];
-        byte[][] clipboard = new byte[NBR_INSTRUCTIONS * CYCLES_PER_INSTR][];
-
-        string[] instr_names = new string[NBR_INSTRUCTIONS];
-        string[] info = new string[NBR_INSTRUCTIONS * CYCLES_PER_INSTR];
-        string[] info_clip = new string[NBR_INSTRUCTIONS * CYCLES_PER_INSTR];
-
         int cycle_nbr = 0;
-        //int ROM_nbr = 0;
-        int from1, from2, to1;//, to2;
-
-        int from_origin, from_dest;
         int instr_nbr = 0;
-        String instr_name_clip = "";
-        String current_filename = "";
 
         int[] microcode_enable;
+
+        bool updatingDisplay = false;
+        bool disabledCmb = false;
+        bool disabledLst = false;
+
+        RomManager rommgr;
+        RomClipboard clipboard;
+
+        String sys_fileManager = ""; //explorer.exe
+        String sys_hexEditor = ""; //"C:\\Program Files\\HxD\\HxD64.exe"
+        String sys_calculator = ""; //calc.exe
+        String sys_terminal = ""; //cmd.exe
+        String sys_notepad = ""; // notepad.exe
 
         public FrmMain()
         {
             InitializeComponent();
 
-            for (int i = 0; i < NBR_ROMS; i++)
-            {
-                ROMS[i] = new byte[NBR_INSTRUCTIONS * CYCLES_PER_INSTR];
-            }
+            rommgr = new RomManager();
+            rommgr.Clear();
 
-            for (int i = 0; i < NBR_INSTRUCTIONS * CYCLES_PER_INSTR; i++)
-            {
-                clipboard[i] = new byte[NBR_ROMS];
-            }
+            clipboard = new RomClipboard();
+            clipboard.Clear();
 
-            for (int i = 0; i < 64; i++)
+
+            for (int i = 0; i < RomManager.CYCLES_PER_INSTR; i++)
                 list_cycle.Items.Add(i.ToString("X2"));
-
 
             list_names.MultiColumn = true;
             list_names.ColumnWidth = 310;
@@ -139,70 +114,7 @@ namespace sol1_simu
             */
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            saveFileDialog1.FileName = "rom";
-            saveFileDialog1.Filter = "Rom files (rom*.*)|rom*.*|All files (*.*)|*.*";
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string filename = saveFileDialog1.FileName;
-                if (WRITE(filename))
-                    this.Text = filename;
-            }
-        }
-
-
-        void reset_lists(int cycle)
-        {
-            info[cycle] = "";
-            ROMS[0][cycle] = 0;
-            ROMS[1][cycle] = 0;
-            ROMS[2][cycle] = 0xC0;
-            ROMS[3][cycle] = 0;
-            ROMS[4][cycle] = 0;
-            ROMS[5][cycle] = 0;
-            ROMS[6][cycle] = 0;
-            ROMS[7][cycle] = 0xF0;
-            ROMS[8][cycle] = 0x8F;
-            ROMS[9][cycle] = 0xFF;
-            ROMS[10][cycle] = 0xFF;
-            ROMS[11][cycle] = 0x47;
-            ROMS[12][cycle] = 0xC0;
-            ROMS[13][cycle] = 0;
-            ROMS[14][cycle] = 0;
-
-        }
-
-
-        public string format_memo_name(string tmp_instr_name)
-        {
-            tmp_instr_name = tmp_instr_name.Trim();
-            tmp_instr_name = tmp_instr_name.Replace(", ", ",");
-            tmp_instr_name = tmp_instr_name.Replace(" + ", "+");
-            tmp_instr_name = tmp_instr_name.Replace(" - ", "-");
-            tmp_instr_name = tmp_instr_name.Replace(" * ", "*");
-            tmp_instr_name = tmp_instr_name.Replace(" ^ ", "^");
-            tmp_instr_name = tmp_instr_name.Replace(" / ", "/");
-
-            tmp_instr_name = tmp_instr_name.Replace(" \\ ", "\\");
-            tmp_instr_name = tmp_instr_name.Replace(" | ", "|");
-
-            tmp_instr_name = tmp_instr_name.Replace("\t", " ");
-            tmp_instr_name = tmp_instr_name.Replace("  ", " ");
-
-            //tmp_instr_name = tmp_instr_name.Replace("/", "\\");
-            //tmp_instr_name = tmp_instr_name.Replace("-", "|");
-
-            tmp_instr_name = tmp_instr_name.Replace(",", ", ");
-            tmp_instr_name = tmp_instr_name.Replace("+", " + ");
-            tmp_instr_name = tmp_instr_name.Replace("-", " - ");
-            tmp_instr_name = tmp_instr_name.Replace("*", " * ");
-            tmp_instr_name = tmp_instr_name.Replace("/", " / ");
-            tmp_instr_name = tmp_instr_name.Replace("^", " ^ ");
-            tmp_instr_name = tmp_instr_name.Replace("|", " | ");
-            return tmp_instr_name;
-        }
         void write_cycle()
         {
 
@@ -211,15 +123,15 @@ namespace sol1_simu
 
             if (mnu_readonly.Checked == true) return;
 
-            info[cycle_nbr] = memo_info.Text;
+            rommgr.info[cycle_nbr] = memo_info.Text;
 
-            string tmp_instr_name = format_memo_name(memo_name.Text);
+            string tmp_instr_name = Utils.FormatMemoName(memo_name.Text);
 
-            if (tmp_instr_name != instr_names[cycle_nbr / CYCLES_PER_INSTR])
-                instr_names[cycle_nbr / CYCLES_PER_INSTR] = tmp_instr_name;
+            if (tmp_instr_name != rommgr.instr_names[cycle_nbr / RomManager.CYCLES_PER_INSTR])
+                rommgr.instr_names[cycle_nbr / RomManager.CYCLES_PER_INSTR] = tmp_instr_name;
 
             disable_lst_refresh();
-            for (int i = 0; i < 15 * 8; i++)
+            for (int i = 0; i < RomManager.TOTAL_CONTROL_BITS; i++)
             {
                 index = i % 8;
                 if (index == 0)
@@ -234,7 +146,7 @@ namespace sol1_simu
                 if (!control_list.CheckedIndices.Contains(index))
                     control_list.SetItemChecked(index, false);
 
-                ROMS[i / 8][cycle_nbr] = val;
+                rommgr.ROMS[i / 8][cycle_nbr] = val;
             }
             enable_lst_refresh();
 
@@ -242,14 +154,10 @@ namespace sol1_simu
 
         }
 
-        int booltoint(bool b)
-        {
-            if (b == true) return 1;
-            else return 0;
-        }
 
 
-        void cmbAluOp_update()
+
+        private void cmbAluOp_update()
         {
             int index = 0;
             disable_cmb_refresh();
@@ -393,10 +301,7 @@ namespace sol1_simu
 
         }
 
-
-        bool updatingDisplay = false;
-
-        void update_display()
+        private void update_display()
         {
 
             if (!updatingDisplay)
@@ -409,10 +314,10 @@ namespace sol1_simu
                 int index;
 
                 list_names.Items.Clear();
-                for (i = 0; i < 256; i++)
+                for (i = 0; i < RomManager.NBR_INSTRUCTIONS; i++)
                 {
-                    if (instr_names[i] == null)
-                        instr_names[i] = "";
+                    if (rommgr.instr_names[i] == null)
+                        rommgr.instr_names[i] = "";
 
                     /*
                     if (instr_names[i].IndexOf("-") > -1)
@@ -425,102 +330,102 @@ namespace sol1_simu
                     string tmp_instr_name = format_memo_name(instr_names[i].ToLower());
                     instr_names[i] = tmp_instr_name;
                     */
-                    list_names.Items.Add(i.ToString("X2") + ": " + instr_names[i]);
+                    list_names.Items.Add(i.ToString("X2") + ": " + rommgr.instr_names[i]);
                 }
 
-                for (i = 0; i < 15; i++)
+                for (i = 0; i < RomManager.NBR_ROMS; i++)
                 {
                     for (j = 0; j < 8; j++)
                     {
 
                         index = i * 8 + j;
-                        bool ischecked = ((int)ROMS[i][cycle_nbr] & (int)Math.Pow(2, j)) != 0;
+                        bool ischecked = ((int)rommgr.ROMS[i][cycle_nbr] & (int)Math.Pow(2, j)) != 0;
                         if (control_list.CheckedIndices.Contains(index) != ischecked)
                             control_list.SetItemChecked(index, ischecked);
                     }
                 }
 
-                if (memo_info.Text != info[cycle_nbr])
-                    memo_info.Text = info[cycle_nbr];
+                if (memo_info.Text != rommgr.info[cycle_nbr])
+                    memo_info.Text = rommgr.info[cycle_nbr];
 
-                if (memo_name.Text != instr_names[cycle_nbr / CYCLES_PER_INSTR])
-                    memo_name.Text = instr_names[cycle_nbr / CYCLES_PER_INSTR];
+                if (memo_name.Text != rommgr.instr_names[cycle_nbr / RomManager.CYCLES_PER_INSTR])
+                    memo_name.Text = rommgr.instr_names[cycle_nbr / RomManager.CYCLES_PER_INSTR];
 
-                for (i = 0; i < 64; i++)
+                for (i = 0; i < RomManager.CYCLES_PER_INSTR; i++)
                 {
-                    if (instr_names[i / CYCLES_PER_INSTR].Trim() != "")
+                    if (rommgr.instr_names[i / RomManager.CYCLES_PER_INSTR].Trim() != "")
                     {
                         //list_cycle.Items[i]
                     }
                 }
 
 
-                index = (int)(cycle_nbr / CYCLES_PER_INSTR);
+                index = (int)(cycle_nbr / RomManager.CYCLES_PER_INSTR);
                 if (list_names.SelectedIndex != index)
                     list_names.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(0)) | (booltoint(control_list.CheckedIndices.Contains(1)) << 1);
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(0)) | (Utils.BoolToInt(control_list.CheckedIndices.Contains(1)) << 1);
                 if (cmb_next_inst.SelectedIndex != index)
                     cmb_next_inst.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_flags_src")));
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_flags_src")));
                 if (cmb_flags_src.SelectedIndex != index)
                     cmb_flags_src.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("mdr_in_src")));
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("mdr_in_src")));
                 if (cmb_mdr_in_src.SelectedIndex != index)
                     cmb_mdr_in_src.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("mdr_out_src")));
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("mdr_out_src")));
                 if (cmb_mdr_out_src.SelectedIndex != index)
                     cmb_mdr_out_src.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("mar_in_src")));
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("mar_in_src")));
                 if (cmb_mar_in_src.SelectedIndex != index)
                     cmb_mar_in_src.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_cf_out_inv")));
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_cf_out_inv")));
                 if (cmb_alu_cf_out_inv.SelectedIndex != index)
                     cmb_alu_cf_out_inv.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_cf_in_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_cf_in_src_1"))) << 1
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_cf_in_inv"))) << 2;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_cf_in_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_cf_in_src_1"))) << 1
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_cf_in_inv"))) << 2;
                 if (cmb_alu_cf_in.SelectedIndex != index)
                     cmb_alu_cf_in.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("shift_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("shift_src_1"))) << 1
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("shift_src_2"))) << 2;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("shift_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("shift_src_1"))) << 1
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("shift_src_2"))) << 2;
                 if (cmb_shift_src.SelectedIndex != index)
                     cmb_shift_src.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_1"))) << 1
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_2"))) << 2
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_3"))) << 3
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_4"))) << 4
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_5"))) << 5;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_1"))) << 1
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_2"))) << 2
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_3"))) << 3
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_4"))) << 4
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_a_src_5"))) << 5;
                 if (cmb_alu_a_mux.SelectedIndex != index)
                     cmb_alu_a_mux.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_b_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_b_src_1"))) << 1
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_b_src_2"))) << 2;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_b_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_b_src_1"))) << 1
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("alu_b_src_2"))) << 2;
                 if (cmb_alu_b_mux.SelectedIndex != index)
                     cmb_alu_b_mux.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("zbus_out_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("zbus_out_src_1"))) << 1;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("zbus_out_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("zbus_out_src_1"))) << 1;
                 if (cmb_zbus.SelectedIndex != index)
                     cmb_zbus.SelectedIndex = index;
 
-                int offset = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_1"))) << 1
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_2"))) << 2
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_3"))) << 3
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_4"))) << 4
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_5"))) << 5;
+                int offset = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_1"))) << 1
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_2"))) << 2
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_3"))) << 3
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_4"))) << 4
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_5"))) << 5;
 
                 if (control_list.CheckedIndices.Contains(control_list.Items.IndexOf("offset_6")))
                     offset = offset | (0xFF << 6);
@@ -530,51 +435,51 @@ namespace sol1_simu
                     txtInteger.Text = offset.ToString();
 
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_sel_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_sel_1"))) << 1
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_sel_2"))) << 2
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_sel_3"))) << 3
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_inv"))) << 4;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_sel_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_sel_1"))) << 1
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_sel_2"))) << 2
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_sel_3"))) << 3
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cond_inv"))) << 4;
                 if (cmb_cond_sel.SelectedIndex != index)
                     cmb_cond_sel.SelectedIndex = index;
 
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("zf_in_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("zf_in_src_1"))) << 1;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("zf_in_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("zf_in_src_1"))) << 1;
                 if (cmb_zf_in.SelectedIndex != index)
                     cmb_zf_in.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cf_in_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cf_in_src_1"))) << 1
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cf_in_src_2"))) << 2;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cf_in_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cf_in_src_1"))) << 1
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("cf_in_src_2"))) << 2;
                 if (cmb_cf_in.SelectedIndex != index)
                     cmb_cf_in.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("sf_in_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("sf_in_src_1"))) << 1;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("sf_in_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("sf_in_src_1"))) << 1;
                 if (cmb_sf_in.SelectedIndex != index)
                     cmb_sf_in.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("of_in_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("of_in_src_1"))) << 1
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("of_in_src_2"))) << 2;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("of_in_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("of_in_src_1"))) << 1
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("of_in_src_2"))) << 2;
                 if (cmb_of_in.SelectedIndex != index)
                     cmb_of_in.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("uzf_in_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("uzf_in_src_1"))) << 1;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("uzf_in_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("uzf_in_src_1"))) << 1;
                 cmb_uzf.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("ucf_in_src_0")))
-                  | booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("ucf_in_src_1"))) << 1;
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("ucf_in_src_0")))
+                  | Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("ucf_in_src_1"))) << 1;
                 if (cmb_ucf.SelectedIndex != index)
                     cmb_ucf.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("usf_in_src")));
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("usf_in_src")));
                 if (cmb_usf.SelectedIndex != index)
                     cmb_usf.SelectedIndex = index;
 
-                index = booltoint(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("uof_in_src")));
+                index = Utils.BoolToInt(control_list.CheckedIndices.Contains(control_list.Items.IndexOf("uof_in_src")));
                 if (cmb_uof.SelectedIndex != index)
                     cmb_uof.SelectedIndex = index;
 
@@ -590,11 +495,6 @@ namespace sol1_simu
 
         }
 
-        string HexConverted(string strBinary)
-        {
-            string strHex = Convert.ToInt32(strBinary, 2).ToString("X");
-            return strHex;
-        }
 
 
         private string write_esp_info(string last_single_code, string last_single_code_settings)
@@ -646,13 +546,13 @@ namespace sol1_simu
             else if (last_single_code == "offset")
             {
                 if (last_single_code_settings[0] == '1')
-                    extra_desc = "(0x" + HexConverted("1111111" + last_single_code_settings) + ")";
+                    extra_desc = "(0x" + Utils.StrBinToHex("1111111" + last_single_code_settings) + ")";
                 else
-                    extra_desc = "(0x" + HexConverted(last_single_code_settings) + ")";
+                    extra_desc = "(0x" + Utils.StrBinToHex(last_single_code_settings) + ")";
             }
 
             else if (last_single_code == "imm")
-                extra_desc = "(0x" + HexConverted(last_single_code_settings) + ")";
+                extra_desc = "(0x" + Utils.StrBinToHex(last_single_code_settings) + ")";
 
             return last_single_code.PadRight(15) + " = " + last_single_code_settings.PadRight(9) + extra_desc + "\n";
         }
@@ -1114,26 +1014,18 @@ namespace sol1_simu
 
         private void mnu_new_Click(object sender, EventArgs e)
         {
-            NEW();
+            NewFile();
 
             memo_info.Clear();
         }
 
-        void NEW()
+        private void NewFile()
         {
-            int i;
+            rommgr.New();
 
-            cycle_nbr = 0;
-
-
-            for (i = 0; i < NBR_INSTRUCTIONS * CYCLES_PER_INSTR; i++)
+            foreach (String n in rommgr.NamesList())
             {
-                reset_lists(i);
-            }
-            for (i = 0; i < NBR_INSTRUCTIONS; i++)
-            {
-                instr_names[i] = "";
-                list_names.Items.Add(i.ToString("X2") + ": ");
+                list_names.Items.Add(n);
             }
 
             set_readonly(false);
@@ -1144,7 +1036,7 @@ namespace sol1_simu
         {
             int i = 0;
             if (txtInteger.Text == "") i = 0;
-            else i = StrToInt(txtInteger.Text);
+            else i = Utils.StrToInt(txtInteger.Text);
 
             if ((i & 0x01) != 0) control_list.SetItemChecked(13 * 8, true);
             else control_list.SetItemChecked(13 * 8, false);
@@ -1170,7 +1062,7 @@ namespace sol1_simu
         {
             int i;
             if (txtInteger.Text == "") i = 0;
-            else i = StrToInt(txtInteger.Text);
+            else i = Utils.StrToInt(txtInteger.Text);
 
             if ((i & 0x01) != 0) control_list.SetItemChecked(2, true);
             else control_list.SetItemChecked(2, false);
@@ -1192,22 +1084,12 @@ namespace sol1_simu
 
 
 
-        int StrToInt(String s)
-        {
-            int ret = 0;
-            try
-            {
-                ret = int.Parse(s);
-            }
-            catch { }
-            return ret;
-        }
 
         private void lstCycles_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (list_cycle.SelectedIndex > -1)
             {
-                cycle_nbr = instr_nbr * CYCLES_PER_INSTR + list_cycle.SelectedIndex;
+                cycle_nbr = instr_nbr * RomManager.CYCLES_PER_INSTR + list_cycle.SelectedIndex;
                 update_display();
             }
         }
@@ -1236,59 +1118,20 @@ namespace sol1_simu
 
         private void btnShiftLeft_Click(object sender, EventArgs e)
         {
-            if (cycle_nbr == 0) return;
-
-            clipboard[0][0] = ROMS[0][cycle_nbr];
-            clipboard[0][1] = ROMS[1][cycle_nbr];
-            clipboard[0][2] = ROMS[2][cycle_nbr];
-            clipboard[0][3] = ROMS[3][cycle_nbr];
-            clipboard[0][4] = ROMS[4][cycle_nbr];
-            clipboard[0][5] = ROMS[5][cycle_nbr];
-            clipboard[0][6] = ROMS[6][cycle_nbr];
-            clipboard[0][7] = ROMS[7][cycle_nbr];
-            clipboard[0][8] = ROMS[8][cycle_nbr];
-            clipboard[0][9] = ROMS[9][cycle_nbr];
-            clipboard[0][10] = ROMS[10][cycle_nbr];
-            clipboard[0][11] = ROMS[11][cycle_nbr];
-            clipboard[0][12] = ROMS[12][cycle_nbr];
-            clipboard[0][13] = ROMS[13][cycle_nbr];
-
-            ROMS[0][cycle_nbr - 1] = clipboard[0][0];
-            ROMS[1][cycle_nbr - 1] = clipboard[0][1];
-            ROMS[2][cycle_nbr - 1] = clipboard[0][2];
-            ROMS[3][cycle_nbr - 1] = clipboard[0][3];
-            ROMS[4][cycle_nbr - 1] = clipboard[0][4];
-            ROMS[5][cycle_nbr - 1] = clipboard[0][5];
-            ROMS[6][cycle_nbr - 1] = clipboard[0][6];
-            ROMS[7][cycle_nbr - 1] = clipboard[0][7];
-            ROMS[8][cycle_nbr - 1] = clipboard[0][8];
-            ROMS[9][cycle_nbr - 1] = clipboard[0][9];
-            ROMS[10][cycle_nbr - 1] = clipboard[0][10];
-            ROMS[11][cycle_nbr - 1] = clipboard[0][11];
-            ROMS[12][cycle_nbr - 1] = clipboard[0][12];
-            ROMS[13][cycle_nbr - 1] = clipboard[0][13];
-
-            info[cycle_nbr - 1] = info[cycle_nbr];
-            info[cycle_nbr] = "";
-
-            reset_lists(cycle_nbr);
+            clipboard.ShiftLeft(cycle_nbr, rommgr);
             cycle_nbr--;
             update_display();
         }
 
-        private void btnQuit_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
 
         private void btnNextCycle_Click(object sender, EventArgs e)
         {
-            if (cycle_nbr < NBR_INSTRUCTIONS * CYCLES_PER_INSTR - 1) cycle_nbr++;
+            if (cycle_nbr < RomManager.NBR_INSTRUCTIONS * RomManager.CYCLES_PER_INSTR - 1) cycle_nbr++;
 
             update_display();
 
             //list_cycle.ClearSelected();
-            list_cycle.SetSelected(cycle_nbr % CYCLES_PER_INSTR, true);
+            list_cycle.SetSelected(cycle_nbr % RomManager.CYCLES_PER_INSTR, true);
 
             //list_names.ClearSelected();
             //list_names.SetSelected(cycle_nbr / CYCLES_PER_INSTR, true);
@@ -1303,7 +1146,7 @@ namespace sol1_simu
             update_display();
 
             //list_cycle.ClearSelected();
-            list_cycle.SetSelected(cycle_nbr % CYCLES_PER_INSTR, true);
+            list_cycle.SetSelected(cycle_nbr % RomManager.CYCLES_PER_INSTR, true);
 
             //list_names.ClearSelected();
             //list_names.SetSelected(cycle_nbr / CYCLES_PER_INSTR, true);
@@ -1328,51 +1171,16 @@ namespace sol1_simu
 
         private void cmdShiftRight_Click(object sender, EventArgs e)
         {
-            if (cycle_nbr == NBR_INSTRUCTIONS * CYCLES_PER_INSTR - 1) return;
-
-            clipboard[0][0] = ROMS[0][cycle_nbr];
-            clipboard[0][1] = ROMS[1][cycle_nbr];
-            clipboard[0][2] = ROMS[2][cycle_nbr];
-            clipboard[0][3] = ROMS[3][cycle_nbr];
-            clipboard[0][4] = ROMS[4][cycle_nbr];
-            clipboard[0][5] = ROMS[5][cycle_nbr];
-            clipboard[0][6] = ROMS[6][cycle_nbr];
-            clipboard[0][7] = ROMS[7][cycle_nbr];
-            clipboard[0][8] = ROMS[8][cycle_nbr];
-            clipboard[0][9] = ROMS[9][cycle_nbr];
-            clipboard[0][10] = ROMS[10][cycle_nbr];
-            clipboard[0][11] = ROMS[11][cycle_nbr];
-            clipboard[0][12] = ROMS[12][cycle_nbr];
-            clipboard[0][13] = ROMS[13][cycle_nbr];
-
-            ROMS[0][cycle_nbr + 1] = clipboard[0][0];
-            ROMS[1][cycle_nbr + 1] = clipboard[0][1];
-            ROMS[2][cycle_nbr + 1] = clipboard[0][2];
-            ROMS[3][cycle_nbr + 1] = clipboard[0][3];
-            ROMS[4][cycle_nbr + 1] = clipboard[0][4];
-            ROMS[5][cycle_nbr + 1] = clipboard[0][5];
-            ROMS[6][cycle_nbr + 1] = clipboard[0][6];
-            ROMS[7][cycle_nbr + 1] = clipboard[0][7];
-            ROMS[8][cycle_nbr + 1] = clipboard[0][8];
-            ROMS[9][cycle_nbr + 1] = clipboard[0][9];
-            ROMS[10][cycle_nbr + 1] = clipboard[0][10];
-            ROMS[11][cycle_nbr + 1] = clipboard[0][11];
-            ROMS[12][cycle_nbr + 1] = clipboard[0][12];
-            ROMS[13][cycle_nbr + 1] = clipboard[0][13];
-
-            info[cycle_nbr + 1] = info[cycle_nbr];
-            info[cycle_nbr] = "";
-
-            reset_lists(cycle_nbr);
+            clipboard.ShiftRight(cycle_nbr, rommgr);
             cycle_nbr++;
             update_display();
         }
 
         private void btnBitLeft_Click(object sender, EventArgs e)
         {
-            cycle_nbr = cycle_nbr / 64;
+            cycle_nbr = cycle_nbr / RomManager.CYCLES_PER_INSTR;
             cycle_nbr--;
-            cycle_nbr = cycle_nbr * 64;
+            cycle_nbr = cycle_nbr * RomManager.CYCLES_PER_INSTR;
 
             update_display();
 
@@ -1380,16 +1188,16 @@ namespace sol1_simu
             //list_cycle.SetSelected(cycle_nbr % CYCLES_PER_INSTR, true);
 
             //list_names.ClearSelected();
-            list_names.SetSelected(cycle_nbr / CYCLES_PER_INSTR, true);
+            list_names.SetSelected(cycle_nbr / RomManager.CYCLES_PER_INSTR, true);
 
             list_cycle.Focus();
         }
 
         private void cmdBitRight_Click(object sender, EventArgs e)
         {
-            cycle_nbr = cycle_nbr / 64;
+            cycle_nbr = cycle_nbr / RomManager.CYCLES_PER_INSTR;
             cycle_nbr++;
-            cycle_nbr = cycle_nbr * 64;
+            cycle_nbr = cycle_nbr * RomManager.CYCLES_PER_INSTR;
 
 
             update_display();
@@ -1398,7 +1206,7 @@ namespace sol1_simu
             //list_cycle.SetSelected(cycle_nbr % CYCLES_PER_INSTR, true);
 
             //list_names.ClearSelected();
-            list_names.SetSelected(cycle_nbr / CYCLES_PER_INSTR, true);
+            list_names.SetSelected(cycle_nbr / RomManager.CYCLES_PER_INSTR, true);
 
             list_cycle.Focus();
         }
@@ -1407,7 +1215,7 @@ namespace sol1_simu
         {
             if (list_names.SelectedIndex > -1)
             {
-                cycle_nbr = list_names.SelectedIndex * CYCLES_PER_INSTR;
+                cycle_nbr = list_names.SelectedIndex * RomManager.CYCLES_PER_INSTR;
                 instr_nbr = list_names.SelectedIndex;
                 update_display();
 
@@ -1447,328 +1255,96 @@ namespace sol1_simu
         }
 
 
-        void do_copy()
+        private void do_copy()
         {
-            int i, j;
-            bool exit = false;
-
-            for (i = 0; i < CYCLES_PER_INSTR; i++)
-            {
-                if (list_cycle.SelectedIndex == i)
-                {
-                    from1 = instr_nbr * CYCLES_PER_INSTR + i;
-                    for (j = i; j < CYCLES_PER_INSTR; j++)
-                    {
-                        if (list_cycle.SelectedIndex != j)
-                        {
-                            to1 = instr_nbr * CYCLES_PER_INSTR + j - 1;
-                            exit = true;
-                            break;
-                        }
-                    }
-                }
-                if (exit == true) break;
-            }
-
-            for (i = from1; i <= to1; i++)
-            {
-                info_clip[i] = info[i];
-                clipboard[i][0] = ROMS[0][i];
-                clipboard[i][1] = ROMS[1][i];
-                clipboard[i][2] = ROMS[2][i];
-                clipboard[i][3] = ROMS[3][i];
-                clipboard[i][4] = ROMS[4][i];
-                clipboard[i][5] = ROMS[5][i];
-                clipboard[i][6] = ROMS[6][i];
-                clipboard[i][7] = ROMS[7][i];
-                clipboard[i][8] = ROMS[8][i];
-                clipboard[i][9] = ROMS[9][i];
-                clipboard[i][10] = ROMS[10][i];
-                clipboard[i][11] = ROMS[11][i];
-                clipboard[i][12] = ROMS[12][i];
-                clipboard[i][13] = ROMS[13][i];
-            }
+            clipboard.CopyCycle(instr_nbr, list_cycle.SelectedIndex, rommgr);
 
             update_display();
             send_msg("Last action: Cycles copied.");
         }
 
-        void do_reset()
+        private void do_reset()
         {
-            int i, j;
-            bool exit = false;
-
-            for (i = 0; i < CYCLES_PER_INSTR; i++)
-            {
-                if (list_cycle.SelectedIndex == i)
-                {
-                    from1 = instr_nbr * CYCLES_PER_INSTR + i;
-                    for (j = i; j < CYCLES_PER_INSTR; j++)
-                    {
-                        if (list_cycle.SelectedIndex != j)
-                        {
-                            to1 = instr_nbr * CYCLES_PER_INSTR + j - 1;
-                            exit = true;
-                            break;
-                        }
-                    }
-                }
-                if (exit == true) break;
-            }
-
-            for (i = from1; i <= to1; i++)
-            {
-                info_clip[i] = info[i];
-                reset_lists(i);
-            }
+            clipboard.Reset(instr_nbr, list_cycle.SelectedIndex, rommgr);
 
             update_display();
 
             send_msg("Last action: Cycles reset.");
         }
 
+
+
         private void cmdWorkingFolder_Click(object sender, EventArgs e)
         {
-            Process.Start("explorer.exe", System.Environment.CurrentDirectory);
+            try
+            {
+                Process.Start(sys_fileManager, rommgr.working_folder);
+            }
+            catch { }
         }
 
         private void btnHexEditor_Click(object sender, EventArgs e)
         {
-            Process.Start("C:\\Program Files\\HxD\\HxD64.exe");
-        }
-
-        private void calculateAvgCyclesPerInstructionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            String msg = "";
-
-            int i, j;
-            double count = 0.0;
-            double average;
-
-            for (i = 0; i < 256; i++)
+            try
             {
-                for (j = 63; j >= 0; j--)
-                {
-                    if ((ROMS[0][i * 64 + j] & 0x03) == 0x02)
-                    {
-                        count = count + (float)(j + 1);
-                        msg += i.ToString("X2") + ": " + (j + 1).ToString() + "\r\n";
-                        break;
-                    }
-                }
+                Process.Start(sys_hexEditor);
             }
-
-            average = (count + 2) / 255.0; // the +2 accounts for fetch
-
-            msg += "Average: " + average.ToString("N2") + "\r\n";
-            control_info.Text = msg;
-
-        }
-
-
-        private string create_tasm_instruction(int icode, int escape, string instr_name)
-        {
-            String inst = instr_name;
-            int len = escape > 0 ? 2 : 1;
-
-            len += Regex.Matches(instr_name, "i8").Count;
-            len += Regex.Matches(instr_name, "u8").Count;
-            len += (Regex.Matches(instr_name, "i16").Count * 2);
-            len += (Regex.Matches(instr_name, "u16").Count * 2);
-
-            inst = inst.Replace("i8", "@");
-            inst = inst.Replace("u8", "@");
-            inst = inst.Replace("i16", "@");
-            inst = inst.Replace("u16", "@");
-
-            inst = inst.Replace(", ", ",");
-            inst = inst.Replace(" + ", "+");
-            inst = inst.Replace(" - ", "-");
-            inst = inst.Replace(" * ", "*");
-            inst = inst.Replace(" ^ ", "^");
-
-
-            string _params = icode.ToString("X2");
-
-            if (escape == 1) _params += "FD";
-
-            _params += "\t\t" + len.ToString();
-            _params += "\t\t NOP \t\t 1";
-
-            string line = "";
-            if (inst.IndexOf('\\') > -1)
-            {
-                String[] tokens = inst.Split('\\');
-                String inst_params = inst.IndexOf(' ') > -1 ? inst.Substring(inst.IndexOf(' ')) : "";
-                foreach (String t in tokens)
-                {
-                    if (t.IndexOf(' ') > -1)
-                        line += t.Substring(0, t.IndexOf(' ')).ToUpper();
-                    else
-                        line += t.ToUpper();
-
-                    line += inst_params;
-                    line += "\t\t\t";
-                    line += _params + "\r\n";
-                }
-
-                line = line.Trim(new char[] { '\r', '\n' });
-            }
-            else
-            {
-                line = inst.ToUpper();
-                line += "\t\t\t";
-                line += _params;
-            }
-
-            return line;
-        }
-
-        private void generateTASMTableToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-
-            //string[] inst = new string[NBR_INSTRUCTIONS];
-
-            if (MessageBox.Show("Generate table?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                saveFileDialog1.FileName = "minicomputer.tab";
-                saveFileDialog1.Filter = "Tasm files (*.tab)|*.tab|All files (*.*)|*.*";
-
-                if (saveFileDialog1.ShowDialog(this) == DialogResult.OK)
-                {
-                    StreamWriter sw = new StreamWriter(saveFileDialog1.FileName, false);
-
-                    sw.WriteLine("\"TASMSOL\"");
-                    sw.WriteLine(".ALTWILD");
-                    sw.WriteLine("");
-
-                    for (int i = 1; i < NBR_INSTRUCTIONS; i++)
-                    {
-                        if(i % 0x10 == 0) sw.WriteLine("");
-
-                        if (instr_names[i].IndexOf('|') > -1)
-                        {
-                            String[] instrs = instr_names[i].Split('|');
-                            for (int j = instrs.Length - 1; j >= 0; j--)
-                                sw.WriteLine(create_tasm_instruction(i, j, instrs[j].Trim()));
-                        }
-                        else
-                            sw.WriteLine(create_tasm_instruction(i, 0, instr_names[i].Trim()));
-                    }
-                    sw.Close();
-                }
-            }
-
-        }
-
-        private void pasteInstructionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            int i, j;
-
-            if (tabControl1.SelectedIndex > 0) return;
-            if (list_names.SelectedIndex > -1)
-            {
-                from_dest = list_names.SelectedIndex * CYCLES_PER_INSTR;
-
-                instr_names[from_origin / 64] = instr_names[list_names.SelectedIndex];
-                instr_names[list_names.SelectedIndex] = instr_name_clip;
-
-                j = from_origin;
-                for (i = from_dest; i < from_dest + 64; i++)
-                {
-                    info[j] = info[i];
-                    ROMS[0][j] = ROMS[0][i];
-                    ROMS[1][j] = ROMS[1][i];
-                    ROMS[2][j] = ROMS[2][i];
-                    ROMS[3][j] = ROMS[3][i];
-                    ROMS[4][j] = ROMS[4][i];
-                    ROMS[5][j] = ROMS[5][i];
-                    ROMS[6][j] = ROMS[6][i];
-                    ROMS[7][j] = ROMS[7][i];
-                    ROMS[8][j] = ROMS[8][i];
-                    ROMS[9][j] = ROMS[9][i];
-                    ROMS[10][j] = ROMS[10][i];
-                    ROMS[11][j] = ROMS[11][i];
-                    ROMS[12][j] = ROMS[12][i];
-                    ROMS[13][j] = ROMS[13][i];
-                    j++;
-                }
-
-                j = 0;
-                for (i = from_dest; i < from_dest + 64; i++)
-                {
-                    info[i] = info_clip[j];
-                    ROMS[0][i] = clipboard[j][0];
-                    ROMS[1][i] = clipboard[j][1];
-                    ROMS[2][i] = clipboard[j][2];
-                    ROMS[3][i] = clipboard[j][3];
-                    ROMS[4][i] = clipboard[j][4];
-                    ROMS[5][i] = clipboard[j][5];
-                    ROMS[6][i] = clipboard[j][6];
-                    ROMS[7][i] = clipboard[j][7];
-                    ROMS[8][i] = clipboard[j][8];
-                    ROMS[9][i] = clipboard[j][9];
-                    ROMS[10][i] = clipboard[j][10];
-                    ROMS[11][i] = clipboard[j][11];
-                    ROMS[12][i] = clipboard[j][12];
-                    ROMS[13][i] = clipboard[j][13];
-                    j++;
-                }
-
-                update_display();
-            }
+            catch { }
         }
 
         private void btnCalc_Click(object sender, EventArgs e)
         {
-
-            Process.Start("calc.exe");
+            try
+            {
+                Process.Start(sys_calculator);
+            }
+            catch { }
         }
 
         private void btnCmd_Click(object sender, EventArgs e)
         {
-            Process.Start("cmd.exe");
+            try
+            {
+                Process.Start(sys_terminal);
+            }
+            catch { }
         }
 
         private void btnNotepad_Click(object sender, EventArgs e)
         {
-            Process.Start("notepad.exe");
+            try
+            {
+                Process.Start(sys_notepad);
+            }
+            catch { }
         }
+
+        private void calculateAvgCyclesPerInstructionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            control_info.Text = rommgr.CalculateAVgCyclesPerInstruction();
+
+        }
+
+
+        private void pasteInstructionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex > 0) return;
+            if (list_names.SelectedIndex > -1)
+            {
+                clipboard.PasteInstruction(list_names.SelectedIndex, rommgr);
+                update_display();
+            }
+        }
+
+
 
         private void copyInstructionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            int i, j;
-
             if (tabControl1.SelectedIndex > 0) return;
 
             if (list_names.SelectedIndex > -1)
             {
-                from_origin = list_names.SelectedIndex * CYCLES_PER_INSTR;
-
-                instr_name_clip = instr_names[list_names.SelectedIndex];
-
-                j = 0;
-                for (i = from_origin; i < from_origin + 64; i++)
-                {
-                    info_clip[j] = info[i];
-                    clipboard[j][0] = ROMS[0][i];
-                    clipboard[j][1] = ROMS[1][i];
-                    clipboard[j][2] = ROMS[2][i];
-                    clipboard[j][3] = ROMS[3][i];
-                    clipboard[j][4] = ROMS[4][i];
-                    clipboard[j][5] = ROMS[5][i];
-                    clipboard[j][6] = ROMS[6][i];
-                    clipboard[j][7] = ROMS[7][i];
-                    clipboard[j][8] = ROMS[8][i];
-                    clipboard[j][9] = ROMS[9][i];
-                    clipboard[j][10] = ROMS[10][i];
-                    clipboard[j][11] = ROMS[11][i];
-                    clipboard[j][12] = ROMS[12][i];
-                    clipboard[j][13] = ROMS[13][i];
-                    j++;
-                }
+                clipboard.CopyInstruction(list_names.SelectedIndex, rommgr);
             }
         }
 
@@ -1790,40 +1366,77 @@ namespace sol1_simu
             }
             catch { }
 
-            NEW();
+
+            try
+            {
+                String current_filename = ini.IniReadValue("general", "last_microcode_open");
+                if (current_filename.LastIndexOf("\\") > -1)
+                    rommgr.working_folder = current_filename.Substring(0, current_filename.LastIndexOf("\\"));
+                else
+                    rommgr.working_folder = System.Environment.CurrentDirectory;
+
+            }
+            catch { }
+
+
+            try
+            {
+                sys_fileManager = ini.IniReadValue("programs", "file_manager");
+            }
+            catch { }
+            try
+            {
+                sys_hexEditor = ini.IniReadValue("programs", "hex_editor");
+            }
+            catch { }
+            try
+            {
+                sys_calculator = ini.IniReadValue("programs", "calculator");
+            }
+            catch { }
+            try
+            {
+                sys_terminal = ini.IniReadValue("programs", "terminal");
+            }
+            catch { }
+            try
+            {
+                sys_notepad = ini.IniReadValue("programs", "notepad");
+            }
+            catch { }
+
+            cmdWorkingFolder.Enabled = sys_fileManager.Trim() != "";
+            btnHexEditor.Enabled = sys_hexEditor.Trim() != "";
+            btnCalc.Enabled = sys_calculator.Trim() != "";
+            btnCmd.Enabled = sys_terminal.Trim() != "";
+            btnNotepad.Enabled = sys_notepad.Trim() != "";
+
+            NewFile();
 
             openRecentToolStripMenuItem_Click(null, null);
         }
 
-        void do_paste()
+        private void do_paste()
         {
             if (list_names.SelectedIndex > -1)
             {
 
-                from2 = instr_nbr * CYCLES_PER_INSTR + list_cycle.SelectedIndex;
-
-                for (int i = from2; i <= from2 + to1 - from1; i++)
-                {
-                    info[i] = info_clip[i - (from2 - from1)];
-                    ROMS[0][i] = clipboard[i - (from2 - from1)][0];
-                    ROMS[1][i] = clipboard[i - (from2 - from1)][1];
-                    ROMS[2][i] = clipboard[i - (from2 - from1)][2];
-                    ROMS[3][i] = clipboard[i - (from2 - from1)][3];
-                    ROMS[4][i] = clipboard[i - (from2 - from1)][4];
-                    ROMS[5][i] = clipboard[i - (from2 - from1)][5];
-                    ROMS[6][i] = clipboard[i - (from2 - from1)][6];
-                    ROMS[7][i] = clipboard[i - (from2 - from1)][7];
-                    ROMS[8][i] = clipboard[i - (from2 - from1)][8];
-                    ROMS[9][i] = clipboard[i - (from2 - from1)][9];
-                    ROMS[10][i] = clipboard[i - (from2 - from1)][10];
-                    ROMS[11][i] = clipboard[i - (from2 - from1)][11];
-                    ROMS[12][i] = clipboard[i - (from2 - from1)][12];
-                    ROMS[13][i] = clipboard[i - (from2 - from1)][13];
-                }
+                clipboard.PasteCycle(instr_nbr, list_cycle.SelectedIndex, rommgr);
                 update_display();
 
                 send_msg("Last action: Cycles pasted.");
             }
+        }
+
+        private void load_instructions_list()
+        {
+
+            lstInstructions.Items.Clear();
+            foreach (InstructionItem i in rommgr.InstructionList())
+            {
+                lstInstructions.Items.Add(i);
+            }
+            toolStripStatusLabel1.Text = lstInstructions.Items.Count == 1 ? "1 instruction loaded" : String.Format("{0} instructions loaded", lstInstructions.Items.Count);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1836,6 +1449,7 @@ namespace sol1_simu
 
             openFileDialog1.FileName = filename;
             openFileDialog1.Filter = "Rom files (rom*.*)|rom*.*|All files (*.*)|*.*";
+            saveFileDialog1.InitialDirectory = rommgr.working_folder;
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -1844,91 +1458,18 @@ namespace sol1_simu
                 //IniFile ini = new IniFile(System.Environment.CurrentDirectory + "\\" + "config.ini");
                 ini.IniWriteValue("general", "last_microcode_open", filename);
 
-                if (READ(filename))
+                if (ReadFile(filename))
                 {
                     this.Text = filename;
                     cycle_nbr = 0;
                     update_display();
 
-                    lstInstructions.Items.Clear();
-                    for (int i = 0; i < 256; i++)
-                    {
-                        lstInstructions.Items.Add(new Item() { Text = instr_names[i], Value = i.ToString("X2") + ": " + instr_names[i] });
-                    }
+                    load_instructions_list();
                 }
             }
 
         }
 
-        void shift(int amount)
-        {
-            int i, j;
-            bool exit = false;
-
-
-            for (i = 0; i < CYCLES_PER_INSTR; i++)
-            {
-                if (list_cycle.SelectedIndex == i)
-                {
-                    from1 = instr_nbr * CYCLES_PER_INSTR + i;
-                    for (j = i; j < CYCLES_PER_INSTR; j++)
-                    {
-                        if (list_cycle.SelectedIndex != j)
-                        {
-                            to1 = instr_nbr * CYCLES_PER_INSTR + j - 1;
-                            exit = true;
-                            break;
-                        }
-                    }
-                }
-                if (exit == true) break;
-            }
-
-
-            for (i = from1; i <= to1; i++)
-            {
-
-                info_clip[i] = info[i];
-
-                clipboard[i][0] = ROMS[0][i];
-                clipboard[i][1] = ROMS[1][i];
-                clipboard[i][2] = ROMS[2][i];
-                clipboard[i][3] = ROMS[3][i];
-                clipboard[i][4] = ROMS[4][i];
-                clipboard[i][5] = ROMS[5][i];
-                clipboard[i][6] = ROMS[6][i];
-                clipboard[i][7] = ROMS[7][i];
-                clipboard[i][8] = ROMS[8][i];
-                clipboard[i][9] = ROMS[9][i];
-                clipboard[i][10] = ROMS[10][i];
-                clipboard[i][11] = ROMS[11][i];
-                clipboard[i][12] = ROMS[12][i];
-                clipboard[i][13] = ROMS[13][i];
-
-                reset_lists(i);
-            }
-
-            for (i = from1; i <= to1; i++)
-            {
-
-                info[i + amount] = info_clip[i];
-
-                ROMS[0][i + amount] = clipboard[i][0];
-                ROMS[1][i + amount] = clipboard[i][1];
-                ROMS[2][i + amount] = clipboard[i][2];
-                ROMS[3][i + amount] = clipboard[i][3];
-                ROMS[4][i + amount] = clipboard[i][4];
-                ROMS[5][i + amount] = clipboard[i][5];
-                ROMS[6][i + amount] = clipboard[i][6];
-                ROMS[7][i + amount] = clipboard[i][7];
-                ROMS[8][i + amount] = clipboard[i][8];
-                ROMS[9][i + amount] = clipboard[i][9];
-                ROMS[10][i + amount] = clipboard[i][10];
-                ROMS[11][i + amount] = clipboard[i][11];
-                ROMS[12][i + amount] = clipboard[i][12];
-                ROMS[13][i + amount] = clipboard[i][13];
-            }
-        }
 
         private void openRecentToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1940,19 +1481,49 @@ namespace sol1_simu
 
             if (filename.Trim() != "")
             {
-                if (READ(filename))
+                if (ReadFile(filename))
                     this.Text = filename;
             }
 
-            lstInstructions.Items.Clear();
-            for (int i = 0; i < 256; i++)
-            {
-                list_names.Items.Add(i.ToString("X2") + ": " + instr_names[i]);
-                lstInstructions.Items.Add(new Item() { Text = instr_names[i], Value = i.ToString("X2") + ": " + instr_names[i] });
-            }
+            load_instructions_list();
 
             cycle_nbr = 0;
             update_display();
+
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.FileName = "rom";
+            saveFileDialog1.Filter = "Rom files (rom*.*)|rom*.*|All files (*.*)|*.*";
+            saveFileDialog1.InitialDirectory = rommgr.working_folder;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string filename = saveFileDialog1.FileName;
+
+                IniFile ini = new IniFile(System.Environment.CurrentDirectory + "\\" + "config.ini");
+                ini.IniWriteValue("general", "last_microcode_open", filename);
+
+                if (SaveFile(filename))
+                    this.Text = filename;
+            }
+        }
+
+        private void generateTASMTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (MessageBox.Show("Generate table?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                saveFileDialog1.FileName = "minicomputer.tab";
+                saveFileDialog1.Filter = "Tasm files (*.tab)|*.tab|Tasm Byte files (*.tbb)|*.tbb|All files (*.*)|*.*";
+                saveFileDialog1.InitialDirectory = rommgr.working_folder;
+
+                if (saveFileDialog1.ShowDialog(this) == DialogResult.OK)
+                {
+                    rommgr.GenerateTasmTable(saveFileDialog1.FileName, saveFileDialog1.FilterIndex == 2);
+                }
+            }
 
         }
 
@@ -1966,20 +1537,20 @@ namespace sol1_simu
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (current_filename != "")
+            if (rommgr.current_filename != "")
             {
                 if (MessageBox.Show("Save file?", "Confirm save", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    WRITE(current_filename);
+                    rommgr.Write(rommgr.current_filename);
                 }
             }
         }
 
         private void lstInstructions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstInstructions.SelectedIndex != -1 && list_names.Items.IndexOf(((Item)lstInstructions.SelectedItem).Value) != -1)
+            if (lstInstructions.SelectedIndex != -1 && list_names.Items.IndexOf(((InstructionItem)lstInstructions.SelectedItem).Value) != -1)
             {
-                list_names.SelectedIndex = list_names.Items.IndexOf(((Item)lstInstructions.SelectedItem).Value);
+                list_names.SelectedIndex = list_names.Items.IndexOf(((InstructionItem)lstInstructions.SelectedItem).Value);
                 tabControl1.SelectedIndex = 0;
             }
 
@@ -1996,85 +1567,27 @@ namespace sol1_simu
 
 
 
-        String intToBinStr(int n)
-        {
-            String ret = "";
-            if ((n & 0x80) != 0) ret += "1"; else ret += "0";
-            if ((n & 0x40) != 0) ret += "1"; else ret += "0";
-            if ((n & 0x20) != 0) ret += "1"; else ret += "0";
-            if ((n & 0x10) != 0) ret += "1"; else ret += "0";
-            if ((n & 0x08) != 0) ret += "1"; else ret += "0";
-            if ((n & 0x04) != 0) ret += "1"; else ret += "0";
-            if ((n & 0x02) != 0) ret += "1"; else ret += "0";
-            if ((n & 0x01) != 0) ret += "1"; else ret += "0";
 
-            return ret;
-        }
-
-
-        String getStringFromByteArray(byte[] fileBytes2, int start, int max)
-        {
-            String ret = "";
-            for (int i = 0; i < max && fileBytes2[start + i] != 0x00; i++)
-                ret += Convert.ToChar(fileBytes2[start + i]);
-
-            return ret.Trim('\0');
-        }
-
-        bool READ(string filename)
+        private bool ReadFile(string filename)
         {
 
-            if (File.Exists(filename))
+            bool status = rommgr.Read(filename);
+            if (status)
             {
-                string name = "";
-                int i, j, k;
 
-                current_filename = filename;
-                byte[] fileBytes2 = File.ReadAllBytes(filename);
-
-                j = 0;
-                i = 0;
-
-                for (i = 0; i < NBR_INSTRUCTIONS * CYCLES_PER_INSTR * INFO_LEN; i = i + INFO_LEN)
+                foreach (String n in rommgr.NamesList())
                 {
-                    info[j++] = getStringFromByteArray(fileBytes2, i, INFO_LEN);
-                }
-                j = 0;
-                k = 0;
-                for (k = 0; k < NBR_INSTRUCTIONS * STRING_LEN; k = k + STRING_LEN)
-                {
-                    instr_names[j++] = getStringFromByteArray(fileBytes2, i + k, STRING_LEN);
-                }
-
-                for (i = 0; i < 15; i++)
-                {
-                    name = filename;
-                    name = name + i.ToString();
-
-                    byte[] fileBytes = File.ReadAllBytes(name);
-                    j = 0;
-                    foreach (byte b in fileBytes)
-                    {
-                        ROMS[i][j] = b;
-                        j++;
-                    }
-
-
-                }
-
-                for (i = 0; i < 256; i++)
-                {
-                    list_names.Items.Add(i.ToString("X2") + ": " + instr_names[i]);
+                    list_names.Items.Add(n);
                 }
 
                 set_readonly(true);
-                return true;
             }
-            return false;
+
+            return status;
         }
 
 
-        void set_readonly(bool chk)
+        private void set_readonly(bool chk)
         {
             mnu_readonly.Checked = chk;
 
@@ -2093,63 +1606,14 @@ namespace sol1_simu
 
 
 
-        bool WRITE(string filename)
+        public bool SaveFile(string filename)
         {
-
-            string name = "";
-
-            name = filename;
-            current_filename = filename;
-
-            ASCIIEncoding _asiiencode = new ASCIIEncoding();
-
-            using (BinaryWriter binWriter = new BinaryWriter(File.Open(filename, FileMode.Create)))
-            {
-                for (int i = 0; i < NBR_INSTRUCTIONS * CYCLES_PER_INSTR; i++)  //NBR_INSTRUCTIONS * CYCLES_PER_INSTR * STRING_LEN
-                {
-                    byte[] bytes = Encoding.ASCII.GetBytes(info[i].PadRight(STRING_LEN, '\0'));
-                    binWriter.Write(bytes);
-                }
-
-                for (int i = 0; i < NBR_INSTRUCTIONS; i++) //NBR_INSTRUCTIONS * STRING_LEN
-                {
-                    byte[] bytes = Encoding.ASCII.GetBytes(instr_names[i].PadRight(STRING_LEN, '\0'));
-                    binWriter.Write(bytes);
-                }
-            }
-
-            for (int j = 0; j < 15; j++)
-            {
-                name = filename;
-                name = name + j.ToString();
-
-                using (BinaryWriter binWriter = new BinaryWriter(File.Open(name, FileMode.Create)))
-                {
-                    for (int i = 0; i < NBR_INSTRUCTIONS * CYCLES_PER_INSTR; i++)
-
-                        binWriter.Write(ROMS[j][i]);
-                }
-
-            }
-
-
-            using (StreamWriter sw = new StreamWriter("opcode_list.txt", false))
-            {
-                foreach (Item i in lstInstructions.Items)
-                {
-                    sw.WriteLine(i.Value);
-                }
-            }
-
-            if (File.Exists(filename))
-                return true;
-
-            return false;
+            return rommgr.Write(filename);
         }
 
 
-        bool disabledLst = false;
-        void disable_lst_refresh()
+
+        private void disable_lst_refresh()
         {
             control_list.ItemCheck -= control_list_ItemCheck;
             list_names.SelectedIndexChanged -= list_names_SelectedIndexChanged;
@@ -2162,7 +1626,7 @@ namespace sol1_simu
             this.Close();
         }
 
-        void enable_lst_refresh()
+        private void enable_lst_refresh()
         {
             if (disabledLst)
             {
@@ -2206,7 +1670,7 @@ namespace sol1_simu
                 SolidBrush backgroundBrush = (selected) ? new SolidBrush(SystemColors.Highlight) : new SolidBrush(SystemColors.MenuBar);
                 SolidBrush foregroundBrush = (selected) ? new SolidBrush(SystemColors.HighlightText) : new SolidBrush(SystemColors.GrayText);
 
-                if (!selected && info[(instr_nbr * CYCLES_PER_INSTR) + index].Trim() != "")
+                if (!selected && rommgr.UsedCycle(instr_nbr, index))
                 {
                     backgroundBrush = new SolidBrush(SystemColors.Window);
                     foregroundBrush = new SolidBrush(SystemColors.WindowText);
@@ -2226,8 +1690,8 @@ namespace sol1_simu
             write_cycle();
         }
 
-        bool disabledCmb = false;
-        void disable_cmb_refresh()
+
+        private void disable_cmb_refresh()
         {
             //////////////////////////
             //Next Micro-Instruction
@@ -2272,7 +1736,7 @@ namespace sol1_simu
             disabledCmb = true;
         }
 
-        void enable_cmb_refresh()
+        private void enable_cmb_refresh()
         {
             if (disabledCmb)
             {

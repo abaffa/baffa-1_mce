@@ -62,7 +62,6 @@
             this.btnNextCycle = new System.Windows.Forms.Button();
             this.btnPrevCycle = new System.Windows.Forms.Button();
             this.btnBitLeft = new System.Windows.Forms.Button();
-            this.btnQuit = new System.Windows.Forms.Button();
             this.cmdReset = new System.Windows.Forms.Button();
             this.cmdShiftRight = new System.Windows.Forms.Button();
             this.btnShiftLeft = new System.Windows.Forms.Button();
@@ -70,7 +69,6 @@
             this.cmdCopy = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.lstInstructions = new System.Windows.Forms.ListBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -175,52 +173,59 @@
             // mnu_new
             // 
             this.mnu_new.Name = "mnu_new";
-            this.mnu_new.Size = new System.Drawing.Size(142, 22);
+            this.mnu_new.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.mnu_new.Size = new System.Drawing.Size(183, 22);
             this.mnu_new.Text = "New";
             this.mnu_new.Click += new System.EventHandler(this.mnu_new_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(139, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 6);
             // 
             // openRecentToolStripMenuItem
             // 
             this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openRecentToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.openRecentToolStripMenuItem.Text = "Open Recent";
             this.openRecentToolStripMenuItem.Click += new System.EventHandler(this.openRecentToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.openToolStripMenuItem.Text = "Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.saveAsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.S)));
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.saveAsToolStripMenuItem.Text = "Save As";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(139, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 6);
             // 
             // quitToolStripMenuItem
             // 
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.quitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.quitToolStripMenuItem.Text = "Quit";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
@@ -337,7 +342,6 @@
             this.panel3.Controls.Add(this.btnNextCycle);
             this.panel3.Controls.Add(this.btnPrevCycle);
             this.panel3.Controls.Add(this.btnBitLeft);
-            this.panel3.Controls.Add(this.btnQuit);
             this.panel3.Controls.Add(this.cmdReset);
             this.panel3.Controls.Add(this.cmdShiftRight);
             this.panel3.Controls.Add(this.btnShiftLeft);
@@ -351,7 +355,8 @@
             // 
             // btnNotepad
             // 
-            this.btnNotepad.Location = new System.Drawing.Point(748, 31);
+            this.btnNotepad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnNotepad.Location = new System.Drawing.Point(1217, 31);
             this.btnNotepad.Name = "btnNotepad";
             this.btnNotepad.Size = new System.Drawing.Size(75, 23);
             this.btnNotepad.TabIndex = 14;
@@ -361,7 +366,8 @@
             // 
             // btnCmd
             // 
-            this.btnCmd.Location = new System.Drawing.Point(667, 32);
+            this.btnCmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCmd.Location = new System.Drawing.Point(1136, 31);
             this.btnCmd.Name = "btnCmd";
             this.btnCmd.Size = new System.Drawing.Size(75, 23);
             this.btnCmd.TabIndex = 13;
@@ -371,7 +377,8 @@
             // 
             // btnCalc
             // 
-            this.btnCalc.Location = new System.Drawing.Point(587, 32);
+            this.btnCalc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCalc.Location = new System.Drawing.Point(1056, 31);
             this.btnCalc.Name = "btnCalc";
             this.btnCalc.Size = new System.Drawing.Size(75, 23);
             this.btnCalc.TabIndex = 12;
@@ -381,7 +388,8 @@
             // 
             // btnHexEditor
             // 
-            this.btnHexEditor.Location = new System.Drawing.Point(506, 32);
+            this.btnHexEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHexEditor.Location = new System.Drawing.Point(975, 31);
             this.btnHexEditor.Name = "btnHexEditor";
             this.btnHexEditor.Size = new System.Drawing.Size(75, 23);
             this.btnHexEditor.TabIndex = 11;
@@ -391,7 +399,8 @@
             // 
             // cmdWorkingFolder
             // 
-            this.cmdWorkingFolder.Location = new System.Drawing.Point(405, 32);
+            this.cmdWorkingFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdWorkingFolder.Location = new System.Drawing.Point(874, 31);
             this.cmdWorkingFolder.Name = "cmdWorkingFolder";
             this.cmdWorkingFolder.Size = new System.Drawing.Size(96, 23);
             this.cmdWorkingFolder.TabIndex = 10;
@@ -438,16 +447,6 @@
             this.btnBitLeft.Text = "<<<";
             this.btnBitLeft.UseVisualStyleBackColor = true;
             this.btnBitLeft.Click += new System.EventHandler(this.btnBitLeft_Click);
-            // 
-            // btnQuit
-            // 
-            this.btnQuit.Location = new System.Drawing.Point(426, 3);
-            this.btnQuit.Name = "btnQuit";
-            this.btnQuit.Size = new System.Drawing.Size(75, 23);
-            this.btnQuit.TabIndex = 5;
-            this.btnQuit.Text = "Quit";
-            this.btnQuit.UseVisualStyleBackColor = true;
-            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
             // cmdReset
             // 
@@ -502,16 +501,6 @@
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1291, 730);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Web / COM";
-            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -888,7 +877,7 @@
             "0x03: bh",
             "0x04: cl",
             "0x05: ch",
-            "0x06: bl",
+            "0x06: dl",
             "0x07: dh",
             "0x08: sp_l",
             "0x09: sp_h",
@@ -1193,7 +1182,6 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 84);
             this.tabControl1.Name = "tabControl1";
@@ -1230,7 +1218,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(639, 479);
             this.Name = "FrmMain";
-            this.Text = "Simu";
+            this.Text = "Sol-1 Simu";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -1286,7 +1274,6 @@
         private System.Windows.Forms.Button btnNextCycle;
         private System.Windows.Forms.Button btnPrevCycle;
         private System.Windows.Forms.Button btnBitLeft;
-        private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.Button cmdReset;
         private System.Windows.Forms.Button cmdShiftRight;
         private System.Windows.Forms.Button btnShiftLeft;
@@ -1301,7 +1288,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
-        private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListBox lstInstructions;
         private System.Windows.Forms.TabPage tabPage1;
