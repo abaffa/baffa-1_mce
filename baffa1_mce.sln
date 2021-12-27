@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "baffa1-simu", "baffa1-simu\baffa1-simu.csproj", "{C0E7A5DD-5843-419D-9EB0-FF151BC37822}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "baffa1_mce", "baffa1_mce\baffa1_mce.csproj", "{C0E7A5DD-5843-419D-9EB0-FF151BC37822}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "baffa-1_emul", "baffa-1_emul\baffa-1_emul.csproj", "{862ED303-A4E4-4CE9-B4F7-B6FA37F30836}"
 EndProject

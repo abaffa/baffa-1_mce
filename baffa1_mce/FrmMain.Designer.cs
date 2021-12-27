@@ -118,6 +118,12 @@
             this.list_names = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label43 = new System.Windows.Forms.Label();
+            this.btnClearLog = new System.Windows.Forms.Button();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.txtCycle = new System.Windows.Forms.TextBox();
+            this.txtOpcode = new System.Windows.Forms.TextBox();
             this.btnSyncRoms = new System.Windows.Forms.Button();
             this.btnDbgLoad = new System.Windows.Forms.Button();
             this.btnDump = new System.Windows.Forms.Button();
@@ -201,12 +207,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.txtCycle = new System.Windows.Forms.TextBox();
-            this.txtOpcode = new System.Windows.Forms.TextBox();
-            this.btnClearLog = new System.Windows.Forms.Button();
-            this.label43 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -1293,7 +1293,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1299, 756);
-            this.tabControl1.TabIndex = 2;
+            this.tabControl1.TabIndex = 0;
             // 
             // tabPage3
             // 
@@ -1390,6 +1390,64 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Debugger";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label43.Location = new System.Drawing.Point(15, 338);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(182, 25);
+            this.label43.TabIndex = 94;
+            this.label43.Text = "CURRENT INPUT";
+            // 
+            // btnClearLog
+            // 
+            this.btnClearLog.Location = new System.Drawing.Point(451, 267);
+            this.btnClearLog.Name = "btnClearLog";
+            this.btnClearLog.Size = new System.Drawing.Size(76, 39);
+            this.btnClearLog.TabIndex = 93;
+            this.btnClearLog.Text = "Clear Log";
+            this.btnClearLog.UseVisualStyleBackColor = true;
+            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(126, 363);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(33, 13);
+            this.label34.TabIndex = 92;
+            this.label34.Text = "Cycle";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(17, 363);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(45, 13);
+            this.label42.TabIndex = 91;
+            this.label42.Text = "Opcode";
+            // 
+            // txtCycle
+            // 
+            this.txtCycle.Location = new System.Drawing.Point(129, 379);
+            this.txtCycle.MaxLength = 2;
+            this.txtCycle.Name = "txtCycle";
+            this.txtCycle.ReadOnly = true;
+            this.txtCycle.Size = new System.Drawing.Size(35, 20);
+            this.txtCycle.TabIndex = 90;
+            this.txtCycle.TabStop = false;
+            // 
+            // txtOpcode
+            // 
+            this.txtOpcode.Location = new System.Drawing.Point(20, 379);
+            this.txtOpcode.MaxLength = 2;
+            this.txtOpcode.Name = "txtOpcode";
+            this.txtOpcode.ReadOnly = true;
+            this.txtOpcode.Size = new System.Drawing.Size(35, 20);
+            this.txtOpcode.TabIndex = 89;
+            this.txtOpcode.TabStop = false;
             // 
             // btnSyncRoms
             // 
@@ -2227,64 +2285,6 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1299, 22);
             this.statusStrip1.TabIndex = 0;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(126, 363);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(33, 13);
-            this.label34.TabIndex = 92;
-            this.label34.Text = "Cycle";
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(17, 363);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(45, 13);
-            this.label42.TabIndex = 91;
-            this.label42.Text = "Opcode";
-            // 
-            // txtCycle
-            // 
-            this.txtCycle.Location = new System.Drawing.Point(129, 379);
-            this.txtCycle.MaxLength = 2;
-            this.txtCycle.Name = "txtCycle";
-            this.txtCycle.ReadOnly = true;
-            this.txtCycle.Size = new System.Drawing.Size(35, 20);
-            this.txtCycle.TabIndex = 90;
-            this.txtCycle.TabStop = false;
-            // 
-            // txtOpcode
-            // 
-            this.txtOpcode.Location = new System.Drawing.Point(20, 379);
-            this.txtOpcode.MaxLength = 2;
-            this.txtOpcode.Name = "txtOpcode";
-            this.txtOpcode.ReadOnly = true;
-            this.txtOpcode.Size = new System.Drawing.Size(35, 20);
-            this.txtOpcode.TabIndex = 89;
-            this.txtOpcode.TabStop = false;
-            // 
-            // btnClearLog
-            // 
-            this.btnClearLog.Location = new System.Drawing.Point(451, 267);
-            this.btnClearLog.Name = "btnClearLog";
-            this.btnClearLog.Size = new System.Drawing.Size(76, 39);
-            this.btnClearLog.TabIndex = 93;
-            this.btnClearLog.Text = "Clear Log";
-            this.btnClearLog.UseVisualStyleBackColor = true;
-            this.btnClearLog.Click += new System.EventHandler(this.btnClearLog_Click);
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label43.Location = new System.Drawing.Point(15, 338);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(182, 25);
-            this.label43.TabIndex = 94;
-            this.label43.Text = "CURRENT INPUT";
             // 
             // FrmMain
             // 

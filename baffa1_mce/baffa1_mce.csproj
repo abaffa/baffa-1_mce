@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C0E7A5DD-5843-419D-9EB0-FF151BC37822}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>baffa1_simu</RootNamespace>
+    <RootNamespace>baffa1_mce</RootNamespace>
     <AssemblyName>Baffa-1 Microcode Editor</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
