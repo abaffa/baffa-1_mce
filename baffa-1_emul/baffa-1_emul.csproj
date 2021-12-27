@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{862ED303-A4E4-4CE9-B4F7-B6FA37F30836}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>baffa_1_emul</RootNamespace>
+    <AssemblyName>baffa-1_emul</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Baffa1_Alu.cs" />
+    <Compile Include="Baffa1_Alu_4Bit.cs" />
+    <Compile Include="Baffa1_Alu_Bus.cs" />
+    <Compile Include="Baffa1_Bus.cs" />
+    <Compile Include="Baffa1_MicrocodeDebuger.cs" />
+    <Compile Include="Baffa1_Computer.cs" />
+    <Compile Include="Baffa1_Config.cs" />
+    <Compile Include="Baffa1_Controller_Bus.cs" />
+    <Compile Include="Baffa1_CPU.cs" />
+    <Compile Include="Baffa1_Memory.cs" />
+    <Compile Include="Baffa1_Microcode.cs" />
+    <Compile Include="Baffa1_Registers.cs" />
+    <Compile Include="Baffa1_Register_8Bit.cs" />
+    <Compile Include="Baffa1_Rom.cs" />
+    <Compile Include="DebugMenu_Main.cs" />
+    <Compile Include="DebugMenu_Roms.cs" />
+    <Compile Include="HW_IDE.cs" />
+    <Compile Include="HW_TTY.cs" />
+    <Compile Include="HW_UART.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasm_Opcode.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "baffa1-simu", "baffa1-simu\baffa1-simu.csproj", "{C0E7A5DD-5843-419D-9EB0-FF151BC37822}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "baffa-1_emul", "baffa-1_emul\baffa-1_emul.csproj", "{862ED303-A4E4-4CE9-B4F7-B6FA37F30836}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0E7A5DD-5843-419D-9EB0-FF151BC37822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E7A5DD-5843-419D-9EB0-FF151BC37822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E7A5DD-5843-419D-9EB0-FF151BC37822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E7A5DD-5843-419D-9EB0-FF151BC37822}.Release|Any CPU.Build.0 = Release|Any CPU
+		{862ED303-A4E4-4CE9-B4F7-B6FA37F30836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{862ED303-A4E4-4CE9-B4F7-B6FA37F30836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{862ED303-A4E4-4CE9-B4F7-B6FA37F30836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{862ED303-A4E4-4CE9-B4F7-B6FA37F30836}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7B7C3CA-FC4A-4730-BFED-1B8786B36561}
+	EndGlobalSection
+EndGlobal
