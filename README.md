@@ -1,20 +1,26 @@
-# Sol-1 Microcode Editor for Sol-1 HomebrewCPU Minicomputer System
+# Microcode Editor for Baffa-1 HomebrewCPU Minicomputer System
 
-This is a microcode editor for Sol-1 HomebrewCPU Minicomputer - A complete CPU and Minicomputer built from scratch in 74HC logic, created by Paulo de Tarco Constantino Junior (http://sol-1.org). Sol-1 project is inspired by [Bill Buzbee's work](http://homebrewcpu.com) on the [Magic-1 Minicomputer](http://www.magic-1.org/)
+This is a microcode editor for Baffa-1 HomebrewCPU Minicomputer - a CPU and Minicomputer made from 74-Series Logic and based on Sol-1 Architecture proposed by Paulo de Tarco Constantino Junior (http://sol-1.org). 
 
-The original computer softwares (bios, kernel, sample assembly language programs, ...) are available at https://github.com/abaffa/SOL1_MiniComputer.
+Baffa-1 emulator is available for testing and debugging at http://baffa-1.baffasoft.com.br.
 
-I've written an emulator for software testing that is running at http://sol-1.baffasoft.com.br.
+The emulator source repository is available at https://github.com/abaffa/baffa-1_emulator.
 
-The emulator software is available at https://github.com/abaffa/sol-1_emulator.
+![baffa1_mce](_release/baffa-1_microcode_editor1.png)
 
-![sol1_simu](_release/sol1_simu.png)
+![baffa2_mce](_release/baffa-1_microcode_editor2.png)
+
+![baffa3_mce](_release/baffa-1_microcode_editor3.png)
+
+![baffa4_mce](_release/baffa-1_microcode_editor4.png)
+
+![baffa5_mce](_release/baffa-1_microcode_editor5.png)
 
 -----BEGIN LICENSE NOTICE----- 
 
-Sol-1 Simu for Sol-1 HomebrewCPU Minicomputer System
+Microcode Editor for Baffa-1 HomebrewCPU Minicomputer System
 
-Copyright (C) 2021  Augusto Baffa, (sol-1.baffasoft.com.br)
+Copyright (C) 2021  Augusto Baffa, (baffa-1.baffasoft.com.br)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -28,6 +34,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  
+02110-1301, USA.
 
 -----END LICENSE NOTICE----- 
