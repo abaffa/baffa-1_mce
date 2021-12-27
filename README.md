@@ -6,15 +6,15 @@ Baffa-1 emulator is available for testing and debugging at http://baffa-1.baffas
 
 The emulator source repository is available at https://github.com/abaffa/baffa-1_emulator.
 
-![baffa1_mce](_release/baffa-1_microcode_editor1.png)
+![baffa1_mce](_images/baffa-1_microcode_editor1.png)
 
-![baffa2_mce](_release/baffa-1_microcode_editor2.png)
+![baffa2_mce](_images/baffa-1_microcode_editor2.png)
 
-![baffa3_mce](_release/baffa-1_microcode_editor3.png)
+![baffa3_mce](_images/baffa-1_microcode_editor3.png)
 
-![baffa4_mce](_release/baffa-1_microcode_editor4.png)
+![baffa4_mce](_images/baffa-1_microcode_editor4.png)
 
-![baffa5_mce](_release/baffa-1_microcode_editor5.png)
+![baffa5_mce](_images/baffa-1_microcode_editor5.png)
 
 -----BEGIN LICENSE NOTICE----- 
 
