@@ -1,6 +1,6 @@
 # Microcode Editor for Baffa-1 HomebrewCPU Minicomputer System
 
-This is a microcode editor for Baffa-1 HomebrewCPU Minicomputer - a CPU and Minicomputer made from 74-Series Logic and based on Sol-1 Architecture proposed by Paulo de Tarco Constantino Junior (http://sol-1.org). 
+This is a microcode editor for Baffa-1 HomebrewCPU Minicomputer - a CPU and Minicomputer made from 74-Series Logic and based on Sol-1 Architecture proposed by Paulo de Tarco Constantino Junior (http://sol-1.org). Microcode Editor in C# is also based on the original concept proposed by Paulo Constantino in Sol-1_Simu (Borland C++ version) - Sol-1_Simu is the original microcode editor for Sol-1 HomebrewCPU Minicomputer.
 
 Baffa-1 emulator is available for testing and debugging at http://baffa-1.baffasoft.com.br.
 
